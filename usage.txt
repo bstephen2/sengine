@@ -1,0 +1,15 @@
+A Linux C program to test and classify orthodox chess problems. It will eventually deal
+with directmates, selfmates, relfexmates, helpmates and their stalemate equivalents.
+
+Input is taken from the program options and output is xml on stdout. It will run on
+the command line, but is designed to be called from a graphical front end, yet to
+be written. A Windows version will eventually be produced.
+
+It uses:
+    genx (an xml library by Tim Bray)
+    an md5 library by Peter Deutsch
+    uthash.h, utarray.h, utlist.h and utstring.h by Tory Hanson
+
+It is still in development, so don't expect it to work just yet.
+
+

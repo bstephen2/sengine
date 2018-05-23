@@ -48,24 +48,39 @@ bool opt_classify = false;
 bool opt_meson = false;
 
 typedef struct argument {
-    char *name;
-    bool mandatory;
-    void *target;
-    int ( *val ) ( char *, struct argument * );
+	char *name;
+	bool mandatory;
+	void *target;
+	int ( *val ) ( char *, struct argument * );
 } ARGUMENT;
 
+typedef struct arg_hash_entry {
+	char *name;
+	bool mandatory;
+	void *target;
+	int ( *val ) ( char *, struct argument * );
+	UT_hash_handle hh;
+} ARG_HASH_ENTRY;
+
 typedef struct stiprec {
-    char *name;
-    enum AIM aim;
-    enum STIP stip;
+	char *name;
+	enum AIM aim;
+	enum STIP stip;
 } STIPREC;
 
+typedef struct stiprec_hash_entry {
+	char *name;
+	enum AIM aim;
+	enum STIP stip;
+	UT_hash_handle hh;
+} STIPREC_HASH_ENTRY;
+
 static STIPREC stips[] = { {"#", MATE, DIRECT},
-    {"=", STALEMATE, DIRECT},
-    {"H#", MATE, HELP},
-    {"H=", STALEMATE, HELP},
-    {"R#", MATE, REFLEX},
-    {"R=", STALEMATE, REFLEX},
-    {"S#", MATE, SELF},
-    {"S=", STALEMATE, SELF},
+	{"=", STALEMATE, DIRECT},
+	{"H#", MATE, HELP},
+	{"H=", STALEMATE, HELP},
+	{"R#", MATE, REFLEX},
+	{"R=", STALEMATE, REFLEX},
+	{"S#", MATE, SELF},
+	{"S=", STALEMATE, SELF},
 };

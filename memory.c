@@ -29,231 +29,231 @@ uint64_t positions_freed = 0;
 uint64_t boards_freed = 0;
 uint64_t boardlists_freed = 0;
 
-void init_mem( void )
+void init_mem ( void )
 {
 
-    //kv_init( board_stack );
-    //kv_init( position_stack );
-    //kv_init( boardlist_stack );
+	//kv_init( board_stack );
+	//kv_init( position_stack );
+	//kv_init( boardlist_stack );
 
-    return;
+	return;
 }
 
-void close_mem( void )
+void close_mem ( void )
 {
-    //kv_destroy( board_stack );
-    //kv_destroy( position_stack );
-    //kv_destroy( boardlist_stack );
+	//kv_destroy( board_stack );
+	//kv_destroy( position_stack );
+	//kv_destroy( boardlist_stack );
 
-    return;
+	return;
 }
 
-BOARD *getBoard( POSITION * ppos, unsigned char played, unsigned char move )
+BOARD *getBoard ( POSITION * ppos, unsigned char played, unsigned char move )
 {
-    BOARD *rpbrd;
+	BOARD *rpbrd;
 
-    boards_got++;
+	boards_got++;
 
-    //if ( kv_size( board_stack ) > 0 ) {
-    //rpbrd = kv_pop( board_stack );
-    //( void ) MEMSET( ( void * ) rpbrd, '\0', sizeof( BOARD ) );
-    //} else {
-    //rpbrd = calloc( 1, sizeof( BOARD ) );
+	//if ( kv_size( board_stack ) > 0 ) {
+	//rpbrd = kv_pop( board_stack );
+	//( void ) MEMSET( ( void * ) rpbrd, '\0', sizeof( BOARD ) );
+	//} else {
+	//rpbrd = calloc( 1, sizeof( BOARD ) );
 
-    //if ( rpbrd == NULL ) {
-    //( void ) fprintf( stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
-    //__FILE__, __LINE__ );
-    //exit( 1 );
-    //}
-    // }
+	//if ( rpbrd == NULL ) {
+	//( void ) fprintf( stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
+	//__FILE__, __LINE__ );
+	//exit( 1 );
+	//}
+	// }
 
-    rpbrd->pos = getPosition( ppos );
-    rpbrd->tag = '*';
-    rpbrd->side = played;
-    rpbrd->ply = move;
-    rpbrd->qualifier[0] = '\0';
-    rpbrd->use_count = 1;
+	rpbrd->pos = getPosition ( ppos );
+	rpbrd->tag = '*';
+	rpbrd->side = played;
+	rpbrd->ply = move;
+	rpbrd->qualifier[0] = '\0';
+	rpbrd->use_count = 1;
 
-    return rpbrd;
+	return rpbrd;
 }
 
-BOARD *cloneBoard( BOARD * inBrd )
+BOARD *cloneBoard ( BOARD * inBrd )
 {
-    BOARD *rpbrd;
+	BOARD *rpbrd;
 
-    boards_got++;
+	boards_got++;
 
-    //if ( kv_size( board_stack ) > 0 ) {
-    //rpbrd = kv_pop( board_stack );
-    //} else {
-    //rpbrd = malloc( sizeof( BOARD ) );
+	//if ( kv_size( board_stack ) > 0 ) {
+	//rpbrd = kv_pop( board_stack );
+	//} else {
+	//rpbrd = malloc( sizeof( BOARD ) );
 
-    //if ( rpbrd == NULL ) {
-    //( void ) fprintf( stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
-    //__FILE__, __LINE__ );
-    //exit( 1 );
-    // }
-    //}
+	//if ( rpbrd == NULL ) {
+	//( void ) fprintf( stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
+	//__FILE__, __LINE__ );
+	//exit( 1 );
+	// }
+	//}
 
-    //( void ) MEMCPY( ( void * ) rpbrd, ( void * ) inBrd, sizeof( BOARD ) );
-    //rpbrd->next = NULL;
+	//( void ) MEMCPY( ( void * ) rpbrd, ( void * ) inBrd, sizeof( BOARD ) );
+	//rpbrd->next = NULL;
 
-    return rpbrd;
+	return rpbrd;
 }
 
-POSITION *getPosition( POSITION * ppos )
+POSITION *getPosition ( POSITION * ppos )
 {
-    POSITION *rpos;
+	POSITION *rpos;
 
-    positions_got++;
+	positions_got++;
 
-    //if ( kv_size( position_stack ) > 0 ) {
-    //rpos = kv_pop( position_stack );
-    //} else {
-    // rpos = ( POSITION * ) malloc( sizeof( POSITION ) );
+	//if ( kv_size( position_stack ) > 0 ) {
+	//rpos = kv_pop( position_stack );
+	//} else {
+	// rpos = ( POSITION * ) malloc( sizeof( POSITION ) );
 
-    //if ( rpos == NULL ) {
-    //( void ) fprintf( stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
-    //__FILE__, __LINE__ );
-    //exit( 1 );
-    //}
-    //}
+	//if ( rpos == NULL ) {
+	//( void ) fprintf( stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
+	//__FILE__, __LINE__ );
+	//exit( 1 );
+	//}
+	//}
 
-    ( void ) memcpy( rpos, ppos, sizeof( POSITION ) );
+	( void ) memcpy ( rpos, ppos, sizeof ( POSITION ) );
 
-    return rpos;
+	return rpos;
 }
 
-KILLERHASHVALUE *getKillerHashValue( void )
+KILLERHASHVALUE *getKillerHashValue ( void )
 {
 
-    KILLERHASHVALUE *khv = calloc( 1, sizeof( HASHVALUE ) );
+	KILLERHASHVALUE *khv = calloc ( 1, sizeof ( HASHVALUE ) );
 
-    if ( khv == NULL ) {
-        ( void ) fprintf( stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
-                          __FILE__, __LINE__ );
-        exit( 1 );
-    }
+	if ( khv == NULL ) {
+		( void ) fprintf ( stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
+		                   __FILE__, __LINE__ );
+		exit ( 1 );
+	}
 
-    return khv;
+	return khv;
 }
 
-HASHVALUE *getHashValue( void )
+HASHVALUE *getHashValue ( void )
 {
 
-    HASHVALUE *hv = calloc( 1, sizeof( HASHVALUE ) );
+	HASHVALUE *hv = calloc ( 1, sizeof ( HASHVALUE ) );
 
-    if ( hv == NULL ) {
-        ( void ) fprintf( stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
-                          __FILE__, __LINE__ );
-        exit( 1 );
-    }
+	if ( hv == NULL ) {
+		( void ) fprintf ( stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
+		                   __FILE__, __LINE__ );
+		exit ( 1 );
+	}
 
-    return hv;
+	return hv;
 }
 
-BOARDLIST *getBoardlist( unsigned char tplay, unsigned char move )
+BOARDLIST *getBoardlist ( unsigned char tplay, unsigned char move )
 {
 
-    BOARDLIST *pbl;
+	BOARDLIST *pbl;
 
-    boardlists_got++;
+	boardlists_got++;
 
-    //if ( kv_size( boardlist_stack ) > 0 ) {
-    //pbl = kv_pop( boardlist_stack );
-    //( void ) MEMSET( ( void * ) pbl, '\0', sizeof( BOARDLIST ) );
-    //} else {
-    // pbl = calloc( 1, sizeof( BOARDLIST ) );
+	//if ( kv_size( boardlist_stack ) > 0 ) {
+	//pbl = kv_pop( boardlist_stack );
+	//( void ) MEMSET( ( void * ) pbl, '\0', sizeof( BOARDLIST ) );
+	//} else {
+	// pbl = calloc( 1, sizeof( BOARDLIST ) );
 
-    //if ( pbl == NULL ) {
-    //( void ) fprintf( stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
-    //__FILE__, __LINE__ );
-    //exit( 1 );
-    //}
-    //}
+	//if ( pbl == NULL ) {
+	//( void ) fprintf( stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
+	//__FILE__, __LINE__ );
+	//exit( 1 );
+	//}
+	//}
 
-    pbl->toPlay = tplay;
-    pbl->moveNumber = move;
-    pbl->use_count = 1;
-    pbl->vektor = ( BOARD * ) NULL;
+	pbl->toPlay = tplay;
+	pbl->moveNumber = move;
+	pbl->use_count = 1;
+	pbl->vektor = ( BOARD * ) NULL;
 
-    return pbl;
+	return pbl;
 }
 
-void freeBoard( BOARD * pbrd )
+void freeBoard ( BOARD * pbrd )
 {
 
-    assert( pbrd != NULL );
+	assert ( pbrd != NULL );
 
-    pbrd->use_count--;
+	pbrd->use_count--;
 
-    if ( pbrd->use_count == 0 ) {
+	if ( pbrd->use_count == 0 ) {
 
-        boards_freed++;
+		boards_freed++;
 
-        if ( pbrd->pos != NULL ) {
-            freePosition( pbrd->pos );
-        }
+		if ( pbrd->pos != NULL ) {
+			freePosition ( pbrd->pos );
+		}
 
-        if ( pbrd->nextply != NULL ) {
-            freeBoardlist( pbrd->nextply );
-        }
+		if ( pbrd->nextply != NULL ) {
+			freeBoardlist ( pbrd->nextply );
+		}
 
-        if ( pbrd->threat != NULL ) {
-            freeBoardlist( pbrd->threat );
-        }
+		if ( pbrd->threat != NULL ) {
+			freeBoardlist ( pbrd->threat );
+		}
 
-        //if ( kv_size( board_stack ) < MAX_BOARD_POOL ) {
-        //kv_push( struct BOARD *, board_stack, pbrd );
-        //} else {
-        //free( pbrd );
-        //}
-    }
+		//if ( kv_size( board_stack ) < MAX_BOARD_POOL ) {
+		//kv_push( struct BOARD *, board_stack, pbrd );
+		//} else {
+		//free( pbrd );
+		//}
+	}
 
-    return;
+	return;
 }
 
-void freePosition( POSITION * ppos )
+void freePosition ( POSITION * ppos )
 {
 
-    assert( ppos != NULL );
+	assert ( ppos != NULL );
 
-    positions_freed++;
+	positions_freed++;
 
-    //if ( kv_size( position_stack ) < MAX_POS_POOL ) {
-    //kv_push( POSITION *, position_stack, ppos );
-    //} else {
-    //free( ppos );
-    //}
+	//if ( kv_size( position_stack ) < MAX_POS_POOL ) {
+	//kv_push( POSITION *, position_stack, ppos );
+	//} else {
+	//free( ppos );
+	//}
 
 
-    return;
+	return;
 }
 
-void freeBoardlist( BOARDLIST * pbl )
+void freeBoardlist ( BOARDLIST * pbl )
 {
 
-    assert( pbl != NULL );
+	assert ( pbl != NULL );
 
-    pbl->use_count--;
+	pbl->use_count--;
 
-    if ( pbl->use_count == 0 ) {
-        boardlists_freed++;
+	if ( pbl->use_count == 0 ) {
+		boardlists_freed++;
 
-        BOARD *b;
-        BOARD *tmp;
+		BOARD *b;
+		BOARD *tmp;
 
-        LL_FOREACH_SAFE( pbl->vektor, b, tmp ) {
-            LL_DELETE( pbl->vektor, b );
-            freeBoard( b );
-        }
+		LL_FOREACH_SAFE ( pbl->vektor, b, tmp ) {
+			LL_DELETE ( pbl->vektor, b );
+			freeBoard ( b );
+		}
 
-        //if ( kv_size( boardlist_stack ) < MAX_BOARDLIST_POOL ) {
-        //kv_push( BOARDLIST *, boardlist_stack, pbl );
-        //} else {
-        //free( pbl );
-        //}
-    }
+		//if ( kv_size( boardlist_stack ) < MAX_BOARDLIST_POOL ) {
+		//kv_push( BOARDLIST *, boardlist_stack, pbl );
+		//} else {
+		//free( pbl );
+		//}
+	}
 
-    return;
+	return;
 }

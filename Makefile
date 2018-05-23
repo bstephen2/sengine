@@ -11,7 +11,7 @@ DEBUG	=	-g -O0 -DMOVESTAT
 CFLAGS	=	${DEBUG} -c -mtune=native -m${BITS} -Wall -std=gnu99
 LDFLAGS	=	-o${EXE}
 IND	=	astyle
-INDOPTS	=	--style=kr
+INDOPTS	=	--style=kr --indent=tab=3 --pad-oper --pad-paren-out
 MD5HDS	=	md5.h
 MD5MODS	=	md5.c
 MD5OBJS	=	md5.o
