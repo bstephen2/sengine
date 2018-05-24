@@ -11,7 +11,9 @@ DEBUG	=	-g -O0 -DMOVESTAT
 CFLAGS	=	${DEBUG} -c -mtune=native -m${BITS} -Wall -std=gnu99
 LDFLAGS	=	-o${EXE}
 IND	=	astyle
-INDOPTS	=	--style=kr --indent=tab=3 --pad-oper --pad-paren-out
+INDOPTS	=	--style=kr --align-pointer=type --indent=tab=3 --indent=spaces \
+		--pad-oper --unpad-paren --break-blocks --delete-empty-lines \
+		--pad-header
 MD5HDS	=	md5.h
 MD5MODS	=	md5.c
 MD5OBJS	=	md5.o
@@ -72,7 +74,7 @@ genx.o:	genx.c ${MD5HDS}
 	${CC} ${CFLAGS} genx.c
 	
 clean:
-	rm -f ${COBJS} ${CASMS} ${MD5OBJS} ${GXOBJS} *exe *orig
+	rm -f ${COBJS} ${CASMS} ${MD5OBJS} ${GXOBJS} ${EXE}  *orig
 
 tidy:
 	${IND} ${INDOPTS} ${CMODS} ${CHDS}

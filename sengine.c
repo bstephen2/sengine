@@ -29,109 +29,103 @@ static clock_t prog_start, prog_end;
 static double run_time;
 enum SOUNDNESS sound;
 
-void end_clock ( void )
+void end_clock(void)
 {
-	prog_end = clock(  );
-	run_time = ( double ) ( prog_end - prog_start ) / CLOCKS_PER_SEC;
-
-	return;
+    prog_end = clock();
+    run_time = (double)(prog_end - prog_start) / CLOCKS_PER_SEC;
+    return;
 }
 
-int main ( int argc, char *argv[] )
+int main(int argc, char* argv[])
 {
-	int rc;
+    int rc;
+    prog_start = clock();
+    rc = do_options(argc, argv);
+    exit(0);
 
-	prog_start = clock(  );
+    if (rc == 0) {
+        BOARD* init_pos;
+        init();
+        init_mem();
 
-	rc = do_options ( argc, argv );
+        if (opt_stip == HELP) {
+            init_pos = setup_diagram(WHITE);
+        } else {
+            init_pos = setup_diagram(BLACK);
+        }
 
-#ifdef OPTIONS
-	show_options(  );
-#endif
+        rc = validate_board(init_pos);
 
-	if ( rc == 0 ) {
-		BOARD *init_pos;
+        if (rc == 0) {
+            switch (opt_stip) {
+            case DIRECT: {
+                DIR_SOL* dir_sol;
+                dir_sol = (DIR_SOL*) calloc(1, sizeof(DIR_SOL));
+                solve_direct(dir_sol, init_pos);
+                start_dir();
 
-		init(  );
-		init_mem(  );
+                if (dir_sol->set != NULL) {
+                    add_dir_set(dir_sol->set);
+                }
 
-		if ( opt_stip == HELP ) {
-			init_pos = setup_diagram ( WHITE );
-		} else {
-			init_pos = setup_diagram ( BLACK );
-		}
+                if (dir_sol->tries != NULL) {
+                    add_dir_tries(dir_sol->tries);
+                }
 
-		rc = validate_board ( init_pos );
+                if (dir_sol->keys != NULL) {
+                    add_dir_keys(dir_sol->keys);
+                }
 
-		if ( rc == 0 ) {
+                add_dir_options();
+                add_dir_stats(dir_sol);
+                end_clock();
+                time_dir(run_time);
+                end_dir();
+                break;
+            }
 
-			switch ( opt_stip ) {
-			case DIRECT: {
-				DIR_SOL *dir_sol;
+            case SELF:
+                (void) fputs("sengine ERROR: Can't solve selfmates yet!",
+                             stderr);
+                exit(1);
+                break;
 
-				dir_sol = ( DIR_SOL * ) calloc ( 1, sizeof ( DIR_SOL ) );
-				solve_direct ( dir_sol, init_pos );
-				start_dir(  );
+            case REFLEX:
+                (void) fputs("sengine ERROR: Can't solve reflexmates yet!",
+                             stderr);
+                exit(1);
+                break;
 
-				if ( dir_sol->set != NULL ) {
-					add_dir_set ( dir_sol->set );
-				}
+            case HELP:
+                (void) fputs("sengine ERROR: Can't solve helpmates yet!",
+                             stderr);
+                exit(1);
+                break;
 
-				if ( dir_sol->tries != NULL ) {
-					add_dir_tries ( dir_sol->tries );
-				}
+            default:
+                (void) fputs("sengine ERROR: impossible invalid stipulation!!",
+                             stderr);
+                exit(1);
+                break;
+            }
 
-				if ( dir_sol->keys != NULL ) {
-					add_dir_keys ( dir_sol->keys );
-				}
+            close_mem();
+        } else {
+            close_mem();
+            prog_end = clock();
+            run_time = (double)(prog_end - prog_start) / CLOCKS_PER_SEC;
+            (void) fprintf(stderr, "Running Time = %f\n", run_time);
+        }
+    }
 
-				add_dir_options(  );
-				add_dir_stats ( dir_sol );
-				end_clock(  );
-				time_dir ( run_time );
-				end_dir(  );
-				break;
-			}
-			case SELF:
-				( void ) fputs ( "sengine ERROR: Can't solve selfmates yet!",
-				                 stderr );
-				exit ( 1 );
-				break;
-			case REFLEX:
-				( void ) fputs ( "sengine ERROR: Can't solve reflexmates yet!",
-				                 stderr );
-				exit ( 1 );
-				break;
-			case HELP:
-				( void ) fputs ( "sengine ERROR: Can't solve helpmates yet!",
-				                 stderr );
-				exit ( 1 );
-				break;
-			default:
-				( void ) fputs ( "sengine ERROR: impossible invalid stipulation!!",
-				                 stderr );
-				exit ( 1 );
-				break;
-			}
-
-			close_mem(  );
-
-		} else {
-			close_mem(  );
-			prog_end = clock(  );
-			run_time = ( double ) ( prog_end - prog_start ) / CLOCKS_PER_SEC;
-			( void ) fprintf ( stderr, "Running Time = %f\n", run_time );
-		}
-	}
-
-	return rc;
+    return rc;
 }
 
-int tzcount ( BITBOARD inBrd )
+int tzcount(BITBOARD inBrd)
 {
-	if ( inBrd == 0 ) {
-		return 64;
-	}
+    if (inBrd == 0) {
+        return 64;
+    }
 
-	return __builtin_ctzll ( inBrd );
+    return __builtin_ctzll(inBrd);
 }
