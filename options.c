@@ -95,7 +95,6 @@ static int val_kings(char* instr, ARGUMENT* arg)
 
     if (rc == 0) {
         int f, r;
-        ptr += 8;
         f = (int) * ptr - * (ptr + 2);
         r = (int) * (ptr + 1) - * (ptr + 3);
 
@@ -295,6 +294,9 @@ static int val_stip(char* instr, ARGUMENT* arg)
             HASH_ADD_KEYPTR(hh, stiphash, s->name, strlen(s->name), s);
         }
 
+#ifndef NDEBUG
+        int ct = HASH_COUNT(stiphash);
+#endif
         HASH_FIND_STR(stiphash, ptr, s);
 
         if (s != NULL) {
@@ -556,6 +558,9 @@ static void set_up_argtable(void)
         HASH_ADD_KEYPTR(hh, arghash, s->name, strlen(s->name), s);
     }
 
+#ifndef NDEBUG
+    int ct = HASH_COUNT(arghash);
+#endif
     return;
 }
 

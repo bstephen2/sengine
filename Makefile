@@ -7,7 +7,7 @@ EXE	=	sengine
 CC	=	gcc
 LD	=	gcc
 RELEASE	=	-O3 -NDEBUG
-DEBUG	=	-g -O0 -DMOVESTAT 
+DEBUG	=	-g -O0 
 CFLAGS	=	${DEBUG} -c -mtune=native -m${BITS} -Wall -std=gnu99
 LDFLAGS	=	-o${EXE}
 IND	=	astyle

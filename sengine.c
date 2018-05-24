@@ -41,7 +41,6 @@ int main(int argc, char* argv[])
     int rc;
     prog_start = clock();
     rc = do_options(argc, argv);
-    exit(0);
 
     if (rc == 0) {
         BOARD* init_pos;
@@ -61,19 +60,23 @@ int main(int argc, char* argv[])
             case DIRECT: {
                 DIR_SOL* dir_sol;
                 dir_sol = (DIR_SOL*) calloc(1, sizeof(DIR_SOL));
+                SENGINE_MEM_ASSERT(dir_sol);
                 solve_direct(dir_sol, init_pos);
                 start_dir();
 
                 if (dir_sol->set != NULL) {
                     add_dir_set(dir_sol->set);
+                    freeBoardlist(dir_sol->set);
                 }
 
                 if (dir_sol->tries != NULL) {
                     add_dir_tries(dir_sol->tries);
+                    freeBoardlist(dir_sol->tries);
                 }
 
                 if (dir_sol->keys != NULL) {
                     add_dir_keys(dir_sol->keys);
+                    freeBoardlist(dir_sol->keys);
                 }
 
                 add_dir_options();
@@ -81,6 +84,7 @@ int main(int argc, char* argv[])
                 end_clock();
                 time_dir(run_time);
                 end_dir();
+                free(dir_sol);
                 break;
             }
 
