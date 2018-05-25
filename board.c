@@ -1330,7 +1330,6 @@ char* toStr(BOARD* bd)
     char* ret;
     ret = (char*) malloc(16);
     SENGINE_MEM_ASSERT(ret);
-
     ret[0] = numbers[bd->ply];
     ret[1] = '\0';
 

@@ -8,7 +8,7 @@ CC	=	gcc
 LD	=	gcc
 RELEASE	=	-O3 -DNDEBUG
 DEBUG	=	-g -O0 
-CFLAGS	=	${DEBUG} -c -mtune=native -m${BITS} -Wall -std=gnu99
+CFLAGS	=	${RELEASE} -c -mtune=native -m${BITS} -Wall -std=gnu99
 LDFLAGS	=	-o${EXE}
 IND	=	astyle
 INDOPTS	=	--style=kr --align-pointer=type --indent=tab=3 --indent=spaces \

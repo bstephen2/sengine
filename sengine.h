@@ -27,8 +27,6 @@
 #include <inttypes.h>
 #include "uthash.h"
 #include "utlist.h"
-#include "utarray.h"
-#include "utstring.h"
 #include "md5.h"
 
 #define COMPILER "gcc"

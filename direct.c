@@ -1274,16 +1274,16 @@ static void calculateThreats(BOARDLIST* wbl)
 static void sortTriesKeys(DIR_SOL* ds)
 {
     BOARD* b;
-    BOARD* cb;
+    BOARD* bc;
     BOARDLIST* g_keys = getBoardlist(WHITE, 1);
     BOARDLIST* g_tries = getBoardlist(WHITE, 1);
     LL_FOREACH(ds->trieskeys->vektor, b) {
-        cb = cloneBoard(b);
+        bc = cloneBoard(b);
 
         if (isKey(b) == true) {
-            LL_APPEND(g_keys->vektor, cb);
+            LL_APPEND(g_keys->vektor, bc);
         } else {
-            LL_APPEND(g_tries->vektor, cb);
+            LL_APPEND(g_tries->vektor, bc);
         }
     }
     ds->tries = g_tries;
