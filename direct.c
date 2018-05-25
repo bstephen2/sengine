@@ -241,9 +241,6 @@ void solve_direct(DIR_SOL* dsol, BOARD* startpos)
 {
     bool shortsol = false;
     unsigned int m;
-#ifdef TRACE
-    (void) fputs("direct::solve_direct() started\n", stderr);
-#endif
     sound = UNSET;
 
     if ((opt_actual == true) && (opt_moves == 1)) {
@@ -361,17 +358,11 @@ void solve_direct(DIR_SOL* dsol, BOARD* startpos)
     dsol->hash_added = hash_added;
     dsol->hash_hit_null = hash_hit_null;
     dsol->hash_hit_list = hash_hit_list;
-#ifdef TRACE
-    (void) fputs("direct::solve_direct() ended\n", stderr);
-#endif
     return;
 }
 
 static BOARDLIST* gloss_blackMidMove(BOARD* inBrd, int move, int lastmove)
 {
-#ifdef TRACE
-    (void) fputs("direct::gloss_blackMidMove() started\n", stderr);
-#endif
     BOARDLIST* bml;
     BOARDLIST* wml;
     BOARD* b1;
@@ -434,17 +425,11 @@ static BOARDLIST* gloss_blackMidMove(BOARD* inBrd, int move, int lastmove)
         bml->stipIn = NOSTIP;
     }
 
-#ifdef TRACE
-    (void) fputs("direct::gloss_blackMidMove() ended\n", stderr);
-#endif
     return bml;
 }
 
 static BOARDLIST* gloss_whiteMidMove(BOARD* inBrd, int move, int lastmove)
 {
-#ifdef TRACE
-    (void) fputs("direct::gloss_whiteMidMove() started\n", stderr);
-#endif
     BOARDLIST* wml;
     BOARDLIST* bml;
     BOARD* tmp;
@@ -580,17 +565,11 @@ static BOARDLIST* gloss_whiteMidMove(BOARD* inBrd, int move, int lastmove)
         wml->stipIn = NOSTIP;
     }
 
-#ifdef TRACE
-    (void) fputs("direct::gloss_whiteMidMove() ended\n", stderr);
-#endif
     return wml;
 }
 
 static BOARDLIST* gloss_blackMove(BOARD* inBrd, int moves)
 {
-#ifdef TRACE
-    (void) fputs("direct::gloss_blackMove() started\n", stderr);
-#endif
     BOARDLIST* bml;
     BOARDLIST* wml;
     BOARD* tmp;
@@ -653,17 +632,11 @@ static BOARDLIST* gloss_blackMove(BOARD* inBrd, int moves)
         bml->stipIn = NOSTIP;
     }
 
-#ifdef TRACE
-    (void) fputs("direct::gloss_blackMove() ended\n", stderr);
-#endif
     return bml;
 }
 
 static BOARDLIST* norm_blackMidMove(BOARD* inBrd, int move)
 {
-#ifdef TRACE
-    (void) fputs("direct::norm_blackMidMove() started\n", stderr);
-#endif
     BOARDLIST* bml;
     BOARDLIST* wml;
     BOARD* m;
@@ -782,17 +755,11 @@ static BOARDLIST* norm_blackMidMove(BOARD* inBrd, int move)
         bml->stipIn = NOSTIP;
     }
 
-#ifdef TRACE
-    (void) fputs("direct::norm_blackMidMove() ended\n", stderr);
-#endif
     return bml;
 }
 
 static BOARDLIST* blackMove(BOARD* inBrd)
 {
-#ifdef TRACE
-    (void) fputs("direct::blackmove() started\n", stderr);
-#endif
     BOARDLIST* bml;
     BOARDLIST* wml;
     BOARD* b;
@@ -923,17 +890,11 @@ static BOARDLIST* blackMove(BOARD* inBrd)
         bml->stipIn = NOSTIP;
     }
 
-#ifdef TRACE
-    (void) fputs("direct::blackmove() ended\n", stderr);
-#endif
     return bml;
 }
 
 static BOARDLIST* norm_final_move(BOARD* inBrd, int move)
 {
-#ifdef TRACE
-    (void) fputs("direct::norm_final_move() started\n", stderr);
-#endif
     BOARDLIST* wml;
     BOARDLIST* bml;
     BOARD* bd;
@@ -1007,17 +968,11 @@ static BOARDLIST* norm_final_move(BOARD* inBrd, int move)
         (stipAchieved == true) ? (unsigned char) opt_moves : NOSTIP;
     wml->stipIn =
         (stipAchieved == true) ? (unsigned char) opt_moves : NOSTIP;
-#ifdef TRACE
-    (void) fputs("direct::norm_final_move() ended\n", stderr);
-#endif
     return wml;
 }
 
 static BOARDLIST* gloss_first_move(BOARD* brd, int moves)
 {
-#ifdef TRACE
-    (void) fputs("direct::gloss_first_move() started\n", stderr);
-#endif
     BOARDLIST* wml;
     BOARDLIST* bml;
     BOARD* b;
@@ -1079,17 +1034,11 @@ static BOARDLIST* gloss_first_move(BOARD* brd, int moves)
         wml->stipIn = NOSTIP;
     }
 
-#ifdef TRACE
-    (void) fputs("direct::gloss_first_move() ended\n", stderr);
-#endif
     return wml;
 }
 
 static BOARDLIST* norm_first_move(BOARD* brd)
 {
-#ifdef TRACE
-    (void) fputs("direct::norm_first_move() started\n", stderr);
-#endif
     BOARDLIST* wml;
     BOARDLIST* bml;
     BOARD* b;
@@ -1181,17 +1130,11 @@ static BOARDLIST* norm_first_move(BOARD* brd)
         wml->stipIn = NOSTIP;
     }
 
-#ifdef TRACE
-    (void) fputs("direct::norm_first_move() ended\n", stderr);
-#endif
     return wml;
 }
 
 static void weedNonDefences(BOARDLIST* threats, BOARDLIST* bbl, bool fleck)
 {
-#ifdef TRACE
-    (void) fputs("direct::weedNonDefences() started\n", stderr);
-#endif
     BOARDLIST* wbl;
     unsigned int c;
     BOARD* bm;
@@ -1250,17 +1193,11 @@ static void weedNonDefences(BOARDLIST* threats, BOARDLIST* bbl, bool fleck)
         }
     }
 
-#ifdef TRACE
-    (void) fputs("direct::weedNonDefences() ended\n", stderr);
-#endif
     return;
 }
 
 static void walkBBoardList(BOARDLIST* bbl)
 {
-#ifdef TRACE
-    (void) fputs("direct::walkBBoardList() started\n", stderr);
-#endif
     BOARDLIST* wbl;
     BOARD* brd;
     assert(bbl != NULL);
@@ -1275,17 +1212,11 @@ static void walkBBoardList(BOARDLIST* bbl)
         }
     }
 
-#ifdef TRACE
-    (void) fputs("direct::walkBBoardList() ended\n", stderr);
-#endif
     return;
 }
 
 static void walkWBoardList(BOARDLIST* wbl)
 {
-#ifdef TRACE
-    (void) fputs("direct::walkWBoardList() started\n", stderr);
-#endif
     BOARDLIST* bbl;
     BOARDLIST* tbl;
     BOARD* wb;
@@ -1331,29 +1262,17 @@ static void walkWBoardList(BOARDLIST* wbl)
             }
         }
     }
-#ifdef TRACE
-    (void) fputs("direct::walkWBoardList() ended\n", stderr);
-#endif
     return;
 }
 
 static void calculateThreats(BOARDLIST* wbl)
 {
-#ifdef TRACE
-    (void) fputs("direct::calculateThreats() started\n", stderr);
-#endif
     walkWBoardList(wbl);
-#ifdef TRACE
-    (void) fputs("direct::calculateThreats() ended\n", stderr);
-#endif
     return;
 }
 
 static void sortTriesKeys(DIR_SOL* ds)
 {
-#ifdef TRACE
-    (void) fputs("direct::sortTriesKeys() started\n", stderr);
-#endif
     BOARD* b;
     BOARD* cb;
     BOARDLIST* g_keys = getBoardlist(WHITE, 1);
@@ -1369,17 +1288,11 @@ static void sortTriesKeys(DIR_SOL* ds)
     }
     ds->tries = g_tries;
     ds->keys = g_keys;
-#ifdef TRACE
-    (void) fputs("direct::sortTriesKeys() ended\n", stderr);
-#endif
     return;
 }
 
 static void deTrivialise(BOARDLIST* wml)
 {
-#ifdef TRACE
-    (void) fputs("direct::deTrivialise() started\n", stderr);
-#endif
     BOARDLIST* bml;
     BOARD* wm;
     BOARD* tmp;
@@ -1398,17 +1311,11 @@ static void deTrivialise(BOARDLIST* wml)
             }
         }
     }
-#ifdef TRACE
-    (void) fputs("direct::deTrivialise() ended\n", stderr);
-#endif
     return;
 }
 
 static BOARDLIST* calculateSetPlay(BOARD* inBrd)
 {
-#ifdef TRACE
-    (void) fputs("direct::calculateSetPlay started\n", stderr);
-#endif
     BOARDLIST* bList;
     BOARDLIST* wList;
     BOARD* ourBrd;
@@ -1436,29 +1343,17 @@ static BOARDLIST* calculateSetPlay(BOARD* inBrd)
             freeBoardlist(wList);
         }
     }
-#ifdef TRACE
-    (void) fputs("direct::calculateSetPlay ended\n", stderr);
-#endif
     return bList;
 }
 
 static void calculateSetThreats(BOARDLIST* bml)
 {
-#ifdef TRACE
-    (void) fputs("direct::calculateSetThreats started\n", stderr);
-#endif
     walkBBoardList(bml);
-#ifdef TRACE
-    (void) fputs("direct::calculateSetThreats ended\n", stderr);
-#endif
     return;
 }
 
 static BOARDLIST* gloss_final_move(BOARD* inBrd, int moveno)
 {
-#ifdef TRACE
-    (void) fputs("direct::gloss_final_move started\n", stderr);
-#endif
     BOARDLIST* wml;
     BOARDLIST* bml;
     BOARD* bd;
@@ -1506,6 +1401,7 @@ static BOARDLIST* gloss_final_move(BOARD* inBrd, int moveno)
                     bml = generateRefutations(bd, moveno);
                     assert(bml != NULL);
                     LL_COUNT(bml->vektor, tmp1, ct);
+                    freeBoardlist(bml);
 
                     if (ct == 0) {
                         stipAchieved = true;
@@ -1536,17 +1432,11 @@ static BOARDLIST* gloss_final_move(BOARD* inBrd, int moveno)
     wml->maxStip = (stipAchieved == true) ? (unsigned char) moveno : NOSTIP;
     wml->minStip = (stipAchieved == true) ? (unsigned char) moveno : NOSTIP;
     wml->stipIn = (stipAchieved == true) ? (unsigned char) moveno : NOSTIP;
-#ifdef TRACE
-    (void) fputs("direct::gloss_final_move ended\n", stderr);
-#endif
     return wml;
 }
 
 static BOARDLIST* norm_whiteMidMove(BOARD* inBrd, int move)
 {
-#ifdef TRACE
-    (void) fputs("direct::norm_whiteMidMove() started\n", stderr);
-#endif
     BOARDLIST* wml;
     BOARDLIST* bml;
     BOARD* m;
@@ -1689,8 +1579,5 @@ static BOARDLIST* norm_whiteMidMove(BOARD* inBrd, int move)
         wml->stipIn = NOSTIP;
     }
 
-#ifdef TRACE
-    (void) fputs("direct::norm_whiteMidMove() ended\n", stderr);
-#endif
     return wml;
 }

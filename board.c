@@ -100,9 +100,6 @@ bool boardEquals(BOARD* ibd, BOARD* obd)
 
 bool deepEquals(BOARD* ibd, BOARD* obd)
 {
-#ifdef TRACE
-    (void) fputs("board::deepEquals() starting\n", stderr);
-#endif
     BOARDLIST* bl1;
     BOARDLIST* bl2;
     assert(ibd != NULL);
@@ -142,17 +139,11 @@ bool deepEquals(BOARD* ibd, BOARD* obd)
 bool isKey(BOARD* b)
 {
     bool rb = false;
-#ifdef TRACE
-    (void) fputs("board::isKey() starting\n", stderr);
-#endif
 
     if ((b->tag == '!') || (b->tag == '#') || (b->tag == '=')) {
         rb = true;
     }
 
-#ifdef TRACE
-    (void) fputs("board::isKey() ending\n", stderr);
-#endif
     return rb;
 }
 
@@ -164,9 +155,6 @@ BOARD* setup_diagram(enum COLOUR played)
     int i, p;
     char* po;
     div_t qr;
-#ifdef TRACE
-    (void) fputs("board::setup_diagram() starting\n", stderr);
-#endif
     (void) memset(&pos, '\0', sizeof(POSITION));
     pos.flags = (unsigned char)(played ^ 1);
 
@@ -333,9 +321,6 @@ BOARD* setup_diagram(enum COLOUR played)
     (void) fprintf(stderr, "1<< 33 => %d\n", tzcount(setMask[33]));
     (void) fprintf(stderr, "1<< 63 => %d\n", tzcount(setMask[63]));
 #endif
-#ifdef TRACE
-    (void) fputs("board::setup_diagram() ending\n", stderr);
-#endif
     return rb;
 }
 
@@ -415,9 +400,6 @@ int validate_board(BOARD* inBrd)
     int rc = 0;
     bool wcheck;
     bool bcheck;
-#ifdef TRACE
-    (void) fputs("board::validate_board() starting\n", stderr);
-#endif
 #ifdef SHOWBOARD
     display_board(inBrd);
 #endif
@@ -442,9 +424,6 @@ int validate_board(BOARD* inBrd)
         }
     }
 
-#ifdef TRACE
-    (void) fputs("board::validate_board() ending\n", stderr);
-#endif
     return rc;
 }
 
@@ -479,9 +458,6 @@ char* getSquares(BITBOARD inLong)
 static void nMakeMove(POSITION* ppos, enum COLOUR colour, enum PIECE pic,
                       int inFrom, int inTo)
 {
-#ifdef TRACE
-    (void) fputs("board::nMakeMove() starting\n", stderr);
-#endif
     BITBOARD clearFrom = clearMask[inFrom];
     BITBOARD setTo = setMask[inTo];
     BITBOARD clearTo = clearMask[inTo];
@@ -495,18 +471,12 @@ static void nMakeMove(POSITION* ppos, enum COLOUR colour, enum PIECE pic,
     ppos->bitBoard[colour ^ 1][BISHOP] &= clearTo;
     ppos->bitBoard[colour ^ 1][ROOK] &= clearTo;
     ppos->bitBoard[colour ^ 1][QUEEN] &= clearTo;
-#ifdef TRACE
-    (void) fputs("board::nMakeMove() ending\n", stderr);
-#endif
     return;
 }
 
 static void recordMove(BOARD* bd, enum COLOUR colour, enum PIECE pic,
                        int inFrom, int inTo, enum PIECE inProm, BOARD* fbd)
 {
-#ifdef TRACE
-    (void) fputs("board::recordMove() starting\n", stderr);
-#endif
     assert(fbd != NULL);
     assert(bd != NULL);
     assert(bd != fbd);
@@ -531,17 +501,11 @@ static void recordMove(BOARD* bd, enum COLOUR colour, enum PIECE pic,
         bd->pos->flags |= WHITE;
     }
 
-#ifdef TRACE
-    (void) fputs("board::recordMove() ending\n", stderr);
-#endif
     return;
 }
 
 void generateKingMoves(BOARD* bd, enum COLOUR colour, BOARDLIST* bl)
 {
-#ifdef TRACE
-    (void) fputs("board::generateKingMoves() starting\n", stderr);
-#endif
     int i, iFrom;
     BITBOARD iTos, occupied;
     BOARD* nb;
@@ -580,17 +544,11 @@ void generateKingMoves(BOARD* bd, enum COLOUR colour, BOARDLIST* bl)
         i = tzcount(iTos);
     }
 
-#ifdef TRACE
-    (void) fputs("board::generateKingMoves() ending\n", stderr);
-#endif
     return;
 }
 
 void generateKnightMoves(BOARD* bd, enum COLOUR colour, BOARDLIST* bl)
 {
-#ifdef TRACE
-    (void) fputs("board::generateKnightMoves() starting\n", stderr);
-#endif
     int i, j;
     BOARD* nb;
     BITBOARD temp, occupied;
@@ -635,18 +593,12 @@ void generateKnightMoves(BOARD* bd, enum COLOUR colour, BOARDLIST* bl)
         i = tzcount(temp);
     }
 
-#ifdef TRACE
-    (void) fputs("board::generateKnightMoves() ending\n", stderr);
-#endif
     return;
 }
 
 void generateBishopLikeMoves(BOARD* bd, enum COLOUR colour, BOARDLIST* bl,
                              enum PIECE pic)
 {
-#ifdef TRACE
-    (void) fputs("board::generateBishopLikeMoves() starting\n", stderr);
-#endif
     int i, j;
     BOARD* nb;
     BITBOARD occupied;
@@ -692,18 +644,12 @@ void generateBishopLikeMoves(BOARD* bd, enum COLOUR colour, BOARDLIST* bl,
         i = tzcount(ptemp);
     }
 
-#ifdef TRACE
-    (void) fputs("board::generateBishopLikeMoves() ending\n", stderr);
-#endif
     return;
 }
 
 void generateRookLikeMoves(BOARD* bd, enum COLOUR colour, BOARDLIST* bl,
                            enum PIECE pic)
 {
-#ifdef TRACE
-    (void) fputs("board::generateRookLikeMoves() starting\n", stderr);
-#endif
     int i, j;
     BOARD* nb;
     BBOARD temp;
@@ -764,17 +710,11 @@ void generateRookLikeMoves(BOARD* bd, enum COLOUR colour, BOARDLIST* bl,
         i = tzcount(ptemp);
     }
 
-#ifdef TRACE
-    (void) fputs("board::generateRookLikeMoves() ending\n", stderr);
-#endif
     return;
 }
 
 void generateWhiteCastlings(BOARD* bd, BOARDLIST* bl)
 {
-#ifdef TRACE
-    (void) fputs("board::generateWhiteCastlings() starting\n", stderr);
-#endif
     BITBOARD occupied;
     BOARD* nb;
     assert(bl != NULL);
@@ -828,17 +768,11 @@ void generateWhiteCastlings(BOARD* bd, BOARDLIST* bl)
         }
     }
 
-#ifdef TRACE
-    (void) fputs("board::generateWhiteCastlings() ending\n", stderr);
-#endif
     return;
 }
 
 void generateBlackCastlings(BOARD* bd, BOARDLIST* bl)
 {
-#ifdef TRACE
-    (void) fputs("board::generateBlackCastlings() starting\n", stderr);
-#endif
     BITBOARD occupied;
     BOARD* nb;
     assert(bl != NULL);
@@ -892,17 +826,11 @@ void generateBlackCastlings(BOARD* bd, BOARDLIST* bl)
         }
     }
 
-#ifdef TRACE
-    (void) fputs("board::generateBlackCastlings() ending\n", stderr);
-#endif
     return;
 }
 
 void generateEP(BOARD* bd, enum COLOUR colour, BOARDLIST* bl)
 {
-#ifdef TRACE
-    (void) fputs("board::generateEP() starting\n", stderr);
-#endif
     int iFile, from, to;
     BOARD* nb;
     assert(bl != NULL);
@@ -966,17 +894,11 @@ void generateEP(BOARD* bd, enum COLOUR colour, BOARDLIST* bl)
         }
     }
 
-#ifdef TRACE
-    (void) fputs("board::generateEP() ending\n", stderr);
-#endif
     return;
 }
 
 void makePromotion(BOARD* bd, enum COLOUR colour, int prom, int from, int to)
 {
-#ifdef TRACE
-    (void) fputs("board::makePromotion() starting\n", stderr);
-#endif
     bd->pos->bitBoard[colour][PAWN] &= clearMask[from];
     bd->pos->bitBoard[colour][OCCUPIED] &= clearMask[from];
     bd->pos->bitBoard[colour][prom] |= setMask[to];
@@ -987,17 +909,11 @@ void makePromotion(BOARD* bd, enum COLOUR colour, int prom, int from, int to)
     bd->pos->bitBoard[colour ^ 1][BISHOP] &= clearMask[to];
     bd->pos->bitBoard[colour ^ 1][ROOK] &= clearMask[to];
     bd->pos->bitBoard[colour ^ 1][QUEEN] &= clearMask[to];
-#ifdef TRACE
-    (void) fputs("board::makePromotion() ending\n", stderr);
-#endif
     return;
 }
 
 void generatePawnMoves(BOARD* bd, enum COLOUR colour, BOARDLIST* bl)
 {
-#ifdef TRACE
-    (void) fputs("board::generatePawnMoves() starting\n", stderr);
-#endif
     int i, j, iRank, prom;
     BOARD* nb;
     BITBOARD occupied;
@@ -1180,17 +1096,11 @@ void generatePawnMoves(BOARD* bd, enum COLOUR colour, BOARDLIST* bl)
         i = tzcount(temp);
     }
 
-#ifdef TRACE
-    (void) fputs("board::generatePawnMoves() ending\n", stderr);
-#endif
     return;
 }
 
 BOARDLIST* generateWhiteBoardlist(BOARD* inBrd, int ply)
 {
-#ifdef TRACE
-    (void) fputs("board::generateWhiteBoardlist() started\n", stderr);
-#endif
     BOARDLIST* wbl;
     BOARD* elt;
     int count;
@@ -1229,17 +1139,11 @@ BOARDLIST* generateWhiteBoardlist(BOARD* inBrd, int ply)
 
     LL_COUNT(wbl->vektor, elt, count);
     wbl->legalMoves = (unsigned char) count;
-#ifdef TRACE
-    (void) fputs("board::generateWhiteBoardlist() ended\n", stderr);
-#endif
     return wbl;
 }
 
 BOARDLIST* generateRefutations(BOARD* brd, int move)
 {
-#ifdef TRACE
-    (void) fputs("board::generateRefutations() started\n", stderr);
-#endif
     assert(brd != NULL);
     BOARDLIST* bbl;
     BOARD* elt;
@@ -1318,9 +1222,6 @@ BOARDLIST* generateRefutations(BOARD* brd, int move)
         generateEP(brd, BLACK, bbl);
     }
 
-#ifdef TRACE
-    (void) fputs("board::generateRefutations() ended\n", stderr);
-#endif
     return bbl;
 }
 
@@ -1381,9 +1282,6 @@ void display_board(BOARD* brd)
 
 void qualifyMove(BOARDLIST* baseList, BOARD* brd)
 {
-#ifdef TRACE
-    (void) fputs("board::qualifyMove started\n", stderr);
-#endif
     BOARD* ba[10];
     BOARD* ob;
     int c, j, xFile, yFile;
@@ -1422,27 +1320,16 @@ void qualifyMove(BOARDLIST* baseList, BOARD* brd)
         }
     }
 
-#ifdef TRACE
-    (void) fputs("board::qualifyMove ended\n", stderr);
-#endif
     return;
 }
 
 char* toStr(BOARD* bd)
 {
-#ifdef TRACE
-    (void) fputs("board::toStr started\n", stderr);
-#endif
     int f;
     char tp[5];
     char* ret;
     ret = (char*) malloc(16);
-
-    if (ret == NULL) {
-        (void) fprintf(stderr, "SENGINE ERROR (%s, %d): Out of memory\n",
-                       __FILE__, __LINE__);
-        exit(1);
-    }
+    SENGINE_MEM_ASSERT(ret);
 
     ret[0] = numbers[bd->ply];
     ret[1] = '\0';
@@ -1524,17 +1411,11 @@ char* toStr(BOARD* bd)
         (void) strcat(ret, tp);
     }
 
-#ifdef TRACE
-    (void) fputs("board::toStr ended\n", stderr);
-#endif
     return ret;
 }
 
 BOARDLIST* generateBlackBoardlist(BOARD* bd, int ply, unsigned int* flights)
 {
-#ifdef TRACE
-    (void) fputs("board::generateBlackBoardlist() started\n", stderr);
-#endif
     BOARDLIST* bbl;
     BOARD* elt;
     int count;
@@ -1575,8 +1456,5 @@ BOARDLIST* generateBlackBoardlist(BOARD* bd, int ply, unsigned int* flights)
 
     LL_COUNT(bbl->vektor, elt, count);
     bbl->legalMoves = (unsigned char) count;
-#ifdef TRACE
-    (void) fputs("board::generateBlackBoardlist() ended\n", stderr);
-#endif
     return bbl;
 }

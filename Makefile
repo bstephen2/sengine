@@ -6,7 +6,7 @@ BITS	=	64
 EXE	=	sengine
 CC	=	gcc
 LD	=	gcc
-RELEASE	=	-O3 -NDEBUG
+RELEASE	=	-O3 -DNDEBUG
 DEBUG	=	-g -O0 
 CFLAGS	=	${DEBUG} -c -mtune=native -m${BITS} -Wall -std=gnu99
 LDFLAGS	=	-o${EXE}
@@ -21,9 +21,9 @@ GXHDS	=	genx.h
 GXMODS	=	genx.c charprops.c
 GXOBJS	=	genx.o charprops.o
 CHDS	=	sengine.h options.h
-CMODS	=	sengine.c options.c init.c board.c direct.c dir_xml.c boardlist.c \
+CMODS	=	main.c options.c init.c board.c direct.c dir_xml.c boardlist.c \
 			memory.c
-COBJS	=	sengine.o options.o init.o board.o direct.o dir_xml.o boardlist.o \
+COBJS	=	main.o options.o init.o board.o direct.o dir_xml.o boardlist.o \
 			memory.o
 CASMS	=	sengine.asm options.asm init.asm board.asm direct.asm dir_xml.asm \
 			boardlist.asm memory.asm
@@ -32,9 +32,9 @@ sengine:	${COBJS} ${MD5OBJS} ${GXOBJS}
 	${LD}   ${LDFLAGS} ${COBJS} ${MD5OBJS} ${GXOBJS}
 	cp ${EXE} ${HOME}/bin/${EXE}
 
-sengine.o:	sengine.c ${CHDS} ${KHDS} ${MD5HDS} ${GXHDS}
-	${CC} ${CFLAGS} sengine.c
-	objconv -fnasm sengine.o
+main.o:	main.c ${CHDS} ${KHDS} ${MD5HDS} ${GXHDS}
+	${CC} ${CFLAGS} main.c
+	objconv -fnasm main.o
 	
 boardlist.o:	boardlist.c ${CHDS} ${KHDS} ${MD5HDS} ${GXHDS}
 	${CC} ${CFLAGS} boardlist.c

@@ -294,9 +294,6 @@ static int val_stip(char* instr, ARGUMENT* arg)
             HASH_ADD_KEYPTR(hh, stiphash, s->name, strlen(s->name), s);
         }
 
-#ifndef NDEBUG
-        int ct = HASH_COUNT(stiphash);
-#endif
         HASH_FIND_STR(stiphash, ptr, s);
 
         if (s != NULL) {
@@ -523,7 +520,6 @@ static int val_unimplemented(char* instr, ARGUMENT* arg)
 static void set_up_argtable(void)
 {
     int i;
-    int ret;
     ARGUMENT args[ARGTYPES] = {
         {"--kings", true, &opt_kings, val_kings},
         {"--gbr", true, &opt_gbr, val_gbr},
@@ -558,9 +554,6 @@ static void set_up_argtable(void)
         HASH_ADD_KEYPTR(hh, arghash, s->name, strlen(s->name), s);
     }
 
-#ifndef NDEBUG
-    int ct = HASH_COUNT(arghash);
-#endif
     return;
 }
 
@@ -676,6 +669,7 @@ static int val_combinations(void)
     // kings and pos must be compatible
     {
         char kg[3];
+        kg[0] = '\0';
         strncat(kg, opt_kings, 2);
 
         if (strstr(opt_pos, kg) != NULL) {
@@ -720,22 +714,19 @@ static int val_combinations(void)
 static int val_mandatories(void)
 {
     int rc = 0;
-    //khiter_t k;
-    ARGUMENT arg;
+    ARG_HASH_ENTRY* s;
+    ARG_HASH_ENTRY* tmp;
     char** ptr;
-    //for ( k = kh_begin( harg ); k != kh_end( harg ); ++k ) {
-    //if ( kh_exist( harg, k ) ) {
-    //arg = kh_value( harg, k );
-    //if ( arg.mandatory == true ) {
-    //ptr = ( char ** ) arg.target;
-    //if ( *ptr == NULL ) {
-    //rc++;
-    //( void ) fprintf( stderr, "sengine ERROR: %s option mandatory\n",
-    //arg.name );
-    //}
-    //}
-    //}
-    //}
+    HASH_ITER(hh, arghash, s, tmp) {
+        if (s->mandatory == true) {
+            ptr = (char**) s->target;
+
+            if (*ptr == NULL) {
+                rc++;
+                fprintf(stderr, "sengine ERROR: %s option mandatory\n", s->name);
+            }
+        }
+    }
     return rc;
 }
 
@@ -776,7 +767,7 @@ int do_options(int argc, char** argv)
         rc += val_mandatories();
     }
 
-    if ((rc == 0) || (opt_help == false)) {
+    if (rc == 0) {
         rc += val_combinations();
     }
 

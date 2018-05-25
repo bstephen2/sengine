@@ -83,9 +83,6 @@ bool bListEquals(BOARDLIST* ibl, BOARDLIST* obl)
 
 void weedOutShortVars(BOARDLIST* ml, unsigned char maxstip)
 {
-#ifdef TRACE
-    (void) fputs("boardlist::weedOutShortVars() starting\n", stderr);
-#endif
     BOARDLIST* bl;
     BOARD* b;
     BOARD* tmp;
@@ -99,17 +96,11 @@ void weedOutShortVars(BOARDLIST* ml, unsigned char maxstip)
             }
         }
     }
-#ifdef TRACE
-    (void) fputs("boardlist::weedOutShortVars() ending\n", stderr);
-#endif
     return;
 }
 
 void weedOutLongVars(BOARDLIST* thisml)
 {
-#ifdef TRACE
-    (void) fputs("boardlist::weedOutLongVars() starting\n", stderr);
-#endif
     BOARDLIST* ml;
     BOARD* m;
     BOARD* tmp;
@@ -123,8 +114,5 @@ void weedOutLongVars(BOARDLIST* thisml)
             }
         }
     }
-#ifdef TRACE
-    (void) fputs("boardlist::weedOutLonvVars() ending\n", stderr);
-#endif
     return;
 }

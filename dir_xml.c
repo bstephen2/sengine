@@ -78,9 +78,6 @@ void getBmoveXML(BOARDLIST*);
 void start_dir(void)
 {
     char progText[200];
-#ifdef TRACE
-    (void) fputs("dir_xml::start_dir() started\n", stderr);
-#endif
     w = genxNew(NULL, NULL, NULL);
     (void) genxStartDocFile(w, stdout);
     (void) genxStartElementLiteral(w, NULL, ms);
@@ -138,51 +135,36 @@ void start_dir(void)
     }
 
     (void) genxEndElement(w);
-#ifdef TRACE
-    (void) fputs("dir_xml::start_dir() ended\n", stderr);
-#endif
     return;
 }
 void add_dir_set(BOARDLIST* bml)
 {
-#ifdef TRACE
-    (void) fputs("dir_xml::add_dir_set() started\n", stderr);
-#endif
     (void) genxStartElementLiteral(w, NULL, setsel);
     getBmoveXML(bml);
     (void) genxEndElement(w);
-#ifdef TRACE
-    (void) fputs("dir_xml::add_dir_set() ended\n", stderr);
-#endif
     return;
 }
 
 void add_dir_tries(BOARDLIST* wml)
 {
-#ifdef TRACE
-    (void) fputs("dir_xml::add_dir_tries() started\n", stderr);
-#endif
     (void) genxStartElementLiteral(w, NULL, trysel);
     getWmoveXML(wml);
     (void) genxEndElement(w);
-#ifdef TRACE
-    (void) fputs("dir_xml::add_dir_tries() ended\n", stderr);
-#endif
     return;
 }
 
 void getBmoveXML(BOARDLIST* bList)
 {
-#ifdef TRACE
-    (void) fputs("dir_xml::getBmoveXML() started\n", stderr);
-#endif
     BOARDLIST* wList;
     BOARD* brd;
+    char* ptr;
     assert(bList != NULL);
     LL_FOREACH(bList->vektor, brd) {
         assert(brd != NULL);
         (void) genxStartElementLiteral(w, NULL, bmel);
-        (void) genxAddText(w, (unsigned char*) toStr(brd));
+        ptr = toStr(brd);
+        (void) genxAddText(w, (unsigned char*) ptr);
+        free(ptr);
         wList = brd->nextply;
 
         if (wList != NULL) {
@@ -191,25 +173,22 @@ void getBmoveXML(BOARDLIST* bList)
 
         (void) genxEndElement(w);
     }
-#ifdef TRACE
-    (void) fputs("dir_xml::getBmoveXML() ended\n", stderr);
-#endif
     return;
 }
 
 void getWmoveXML(BOARDLIST* wbl)
 {
-#ifdef TRACE
-    (void) fputs("dir_xml::getWmoveXML() started\n", stderr);
-#endif
     BOARDLIST* thList;
     BOARDLIST* bList;
     BOARD* brd;
+    char* ptr;
     assert(wbl != NULL);
     LL_FOREACH(wbl->vektor, brd) {
         assert(brd != NULL);
         (void) genxStartElementLiteral(w, NULL, wmel);
-        (void) genxAddText(w, (unsigned char*) toStr(brd));
+        ptr = toStr(brd);
+        (void) genxAddText(w, (unsigned char*) ptr);
+        free(ptr);
         thList = brd->threat;
 
         if (thList != NULL) {
@@ -226,46 +205,28 @@ void getWmoveXML(BOARDLIST* wbl)
 
         (void) genxEndElement(w);
     }
-#ifdef TRACE
-    (void) fputs("dir_xml::getWmoveXML() ended\n", stderr);
-#endif
     return;
 }
 
 void add_dir_keys(BOARDLIST* wml)
 {
-#ifdef TRACE
-    (void) fputs("dir_xml::add_dir_keys() started\n", stderr);
-#endif
     (void) genxStartElementLiteral(w, NULL, keysel);
     getWmoveXML(wml);
     (void) genxEndElement(w);
-#ifdef TRACE
-    (void) fputs("dir_xml::add_dir_keys() ended\n", stderr);
-#endif
     return;
 }
 
 void end_dir(void)
 {
-#ifdef TRACE
-    (void) fputs("dir_xml::end_dir() started\n", stderr);
-#endif
     //( void ) puts( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" );
     (void) genxEndElement(w);
     (void) genxEndDocument(w);
     genxDispose(w);
     printf("\n");
-#ifdef TRACE
-    (void) fputs("dir_xml::end_dir() ended\n", stderr);
-#endif
     return;
 }
 void add_dir_options(void)
 {
-#ifdef TRACE
-    (void) fputs("dir_xml::add_dir_options() started\n", stderr);
-#endif
     char stip[5];
     char moves[2];
     char sols[2];
@@ -416,18 +377,12 @@ void add_dir_options(void)
 
     (void) genxEndElement(w);
     (void) genxEndElement(w);
-#ifdef TRACE
-    (void) fputs("dir_xml::add_dir_options() ended\n", stderr);
-#endif
     return;
 }
 
 void add_dir_stats(DIR_SOL* dsol)
 {
     char temp[20];
-#ifdef TRACE
-    (void) fputs("dir_xml::add_dir_stats() started\n", stderr);
-#endif
     (void) genxStartElementLiteral(w, NULL, statsel);
     (void) genxStartElementLiteral(w, NULL, addedel);
     (void) sprintf(temp, "%u", dsol->hash_added);
@@ -442,24 +397,15 @@ void add_dir_stats(DIR_SOL* dsol)
     (void) genxAddText(w, (unsigned char*) temp);
     (void) genxEndElement(w);
     (void) genxEndElement(w);
-#ifdef TRACE
-    (void) fputs("dir_xml::add_dir_stats() ended\n", stderr);
-#endif
     return;
 }
 
 void time_dir(double st)
 {
     char timeText[50];
-#ifdef TRACE
-    (void) fputs("dir_xml::time_dir() started\n", stderr);
-#endif
     (void) genxStartElementLiteral(w, NULL, solvetime);
     (void) sprintf(timeText, "%f", st);
     (void) genxAddText(w, (unsigned char*) timeText);
     (void) genxEndElement(w);
-#ifdef TRACE
-    (void) fputs("dir_xml::time_dir() ended\n", stderr);
-#endif
     return;
 }

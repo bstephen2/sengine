@@ -1,0 +1,105 @@
++ valgrind --leak-check=full sengine --kings=c2a1 --pos=g7 --gbr=0000.10 --moves=2 --stip=# --actual
++ kfilter
+==10714== Memcheck, a memory error detector
+==10714== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==10714== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==10714== Command: sengine --kings=c2a1 --pos=g7 --gbr=0000.10 --moves=2 --stip=# --actual
+==10714== 
+==10714== 
+==10714== HEAP SUMMARY:
+==10714==     in use at exit: 4,536 bytes in 53 blocks
+==10714==   total heap usage: 670 allocs, 617 frees, 89,447 bytes allocated
+==10714== 
+==10714== 24 bytes in 1 blocks are definitely lost in loss record 3 of 22
+==10714==    at 0x4C2FB55: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10714==    by 0x4192AC: getBoardlist (memory.c:169)
+==10714==    by 0x40C9F6: generateRefutations (board.c:1151)
+==10714==    by 0x4135F5: norm_final_move (direct.c:911)
+==10714==    by 0x41229E: blackMove (direct.c:830)
+==10714==    by 0x4141D3: norm_first_move (direct.c:1060)
+==10714==    by 0x40E7AC: solve_direct (direct.c:293)
+==10714==    by 0x4018C1: main (main.c:64)
+==10714== 
+==10714== 24 bytes in 1 blocks are definitely lost in loss record 4 of 22
+==10714==    at 0x4C2FB55: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10714==    by 0x4192AC: getBoardlist (memory.c:169)
+==10714==    by 0x4148AD: sortTriesKeys (direct.c:1279)
+==10714==    by 0x40E7F1: solve_direct (direct.c:304)
+==10714==    by 0x4018C1: main (main.c:64)
+==10714== 
+==10714== 120 bytes in 1 blocks are definitely lost in loss record 8 of 22
+==10714==    at 0x4C2DB8F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10714==    by 0x4190A7: getPosition (memory.c:133)
+==10714==    by 0x418E3F: getBoard (memory.c:89)
+==10714==    by 0x409738: generateKingMoves (board.c:528)
+==10714==    by 0x40C83E: generateWhiteBoardlist (board.c:1108)
+==10714==    by 0x414D02: gloss_final_move (direct.c:1365)
+==10714==    by 0x40E6F7: solve_direct (direct.c:272)
+==10714==    by 0x4018C1: main (main.c:64)
+==10714== 
+==10714== 184 (64 direct, 120 indirect) bytes in 1 blocks are definitely lost in loss record 9 of 22
+==10714==    at 0x4C2FB55: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10714==    by 0x418DFB: getBoard (memory.c:85)
+==10714==    by 0x408B52: setup_diagram (board.c:306)
+==10714==    by 0x40181F: main (main.c:53)
+==10714== 
+==10714== 216 (192 direct, 24 indirect) bytes in 3 blocks are definitely lost in loss record 12 of 22
+==10714==    at 0x4C2FB55: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10714==    by 0x418DFB: getBoard (memory.c:85)
+==10714==    by 0x40C45E: generatePawnMoves (board.c:1060)
+==10714==    by 0x40C920: generateWhiteBoardlist (board.c:1128)
+==10714==    by 0x4135BD: norm_final_move (direct.c:906)
+==10714==    by 0x41229E: blackMove (direct.c:830)
+==10714==    by 0x4141D3: norm_first_move (direct.c:1060)
+==10714==    by 0x40E7AC: solve_direct (direct.c:293)
+==10714==    by 0x4018C1: main (main.c:64)
+==10714== 
+==10714== 232 (24 direct, 208 indirect) bytes in 1 blocks are definitely lost in loss record 13 of 22
+==10714==    at 0x4C2FB55: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10714==    by 0x4192AC: getBoardlist (memory.c:169)
+==10714==    by 0x40C825: generateWhiteBoardlist (board.c:1107)
+==10714==    by 0x414D02: gloss_final_move (direct.c:1365)
+==10714==    by 0x40E6F7: solve_direct (direct.c:272)
+==10714==    by 0x4018C1: main (main.c:64)
+==10714== 
+==10714== 240 bytes in 2 blocks are definitely lost in loss record 14 of 22
+==10714==    at 0x4C2DB8F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10714==    by 0x4190A7: getPosition (memory.c:133)
+==10714==    by 0x418E3F: getBoard (memory.c:89)
+==10714==    by 0x40C45E: generatePawnMoves (board.c:1060)
+==10714==    by 0x40C920: generateWhiteBoardlist (board.c:1128)
+==10714==    by 0x4135BD: norm_final_move (direct.c:906)
+==10714==    by 0x41229E: blackMove (direct.c:830)
+==10714==    by 0x4141D3: norm_first_move (direct.c:1060)
+==10714==    by 0x40E7AC: solve_direct (direct.c:293)
+==10714==    by 0x4018C1: main (main.c:64)
+==10714== 
+==10714== 1,656 (64 direct, 1,592 indirect) bytes in 1 blocks are definitely lost in loss record 21 of 22
+==10714==    at 0x4C2FB55: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10714==    by 0x418DFB: getBoard (memory.c:85)
+==10714==    by 0x409738: generateKingMoves (board.c:528)
+==10714==    by 0x40C83E: generateWhiteBoardlist (board.c:1108)
+==10714==    by 0x414D02: gloss_final_move (direct.c:1365)
+==10714==    by 0x40E6F7: solve_direct (direct.c:272)
+==10714==    by 0x4018C1: main (main.c:64)
+==10714== 
+==10714== 1,840 (64 direct, 1,776 indirect) bytes in 1 blocks are definitely lost in loss record 22 of 22
+==10714==    at 0x4C2FB55: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10714==    by 0x418DFB: getBoard (memory.c:85)
+==10714==    by 0x40C45E: generatePawnMoves (board.c:1060)
+==10714==    by 0x40C920: generateWhiteBoardlist (board.c:1128)
+==10714==    by 0x414D02: gloss_final_move (direct.c:1365)
+==10714==    by 0x40E6F7: solve_direct (direct.c:272)
+==10714==    by 0x4018C1: main (main.c:64)
+==10714== 
+==10714== LEAK SUMMARY:
+==10714==    definitely lost: 816 bytes in 12 blocks
+==10714==    indirectly lost: 3,720 bytes in 41 blocks
+==10714==      possibly lost: 0 bytes in 0 blocks
+==10714==    still reachable: 0 bytes in 0 blocks
+==10714==         suppressed: 0 bytes in 0 blocks
+==10714== 
+==10714== For counts of detected and suppressed errors, rerun with: -v
+==10714== ERROR SUMMARY: 9 errors from 9 contexts (suppressed: 0 from 0)
++ echo 0
++ exit 0

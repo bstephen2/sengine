@@ -50,7 +50,7 @@
 
 #define SENGINE_MEM_ASSERT(X) if ((X) == NULL) \
 { \
-    fputs("OUT OF MEMORY!!\n", stderr); \
+    fprintf(stderr, "OUT OF MEMORY at %s(%d)\n", __FILE__, __LINE__); \
     exit(1); \
 }
 

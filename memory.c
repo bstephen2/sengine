@@ -37,13 +37,6 @@ static BOARD_REC* board_stack;
 static POSITION_REC* position_stack;
 static BOARDLIST_REC* boardlist_stack;
 
-uint64_t positions_got = 0;
-uint64_t boards_got = 0;
-uint64_t boardlists_got = 0;
-uint64_t positions_freed = 0;
-uint64_t boards_freed = 0;
-uint64_t boardlists_freed = 0;
-
 void init_mem(void)
 {
     board_stack = NULL;
@@ -80,14 +73,14 @@ BOARD* getBoard(POSITION* ppos, unsigned char played, unsigned char move)
     BOARD* rpbrd;
     BOARD_REC* elt;
     int len;
-    boards_got++;
     LL_COUNT(board_stack, elt, len);
 
     if (len > 0) {
         rpbrd = board_stack->block;
         memset((void*) rpbrd, '\0', sizeof(BOARD));
-        free(board_stack);
-        LL_DELETE(board_stack, board_stack);
+        elt = board_stack;
+        LL_DELETE(board_stack, elt);
+        free(elt);
     } else {
         rpbrd = calloc(1, sizeof(BOARD));
         SENGINE_MEM_ASSERT(rpbrd);
@@ -107,13 +100,13 @@ BOARD* cloneBoard(BOARD* inBrd)
     BOARD* rpbrd;
     BOARD_REC* elt;
     int len;
-    boards_got++;
     LL_COUNT(board_stack, elt, len);
 
     if (len > 0) {
         rpbrd = board_stack->block;
-        free(board_stack);
-        LL_DELETE(board_stack, board_stack);
+        elt = board_stack;
+        LL_DELETE(board_stack, elt);
+        free(elt);
     } else {
         rpbrd = malloc(sizeof(BOARD));
         SENGINE_MEM_ASSERT(rpbrd);
@@ -129,13 +122,13 @@ POSITION* getPosition(POSITION* ppos)
     POSITION* rpos;
     POSITION_REC* elt;
     int len;
-    positions_got++;
     LL_COUNT(position_stack, elt, len);
 
     if (len > 0) {
         rpos = position_stack->block;
-        free(position_stack);
-        LL_DELETE(position_stack, position_stack);
+        elt = position_stack;
+        LL_DELETE(position_stack, elt);
+        free(elt);
     } else {
         rpos = (POSITION*) malloc(sizeof(POSITION));
         SENGINE_MEM_ASSERT(rpos);
@@ -164,13 +157,13 @@ BOARDLIST* getBoardlist(unsigned char tplay, unsigned char move)
     BOARDLIST* pbl;
     BOARDLIST_REC* elt;
     int len;
-    boardlists_got++;
     LL_COUNT(boardlist_stack, elt, len);
 
     if (len > 0) {
         pbl = boardlist_stack->block;
-        free(boardlist_stack);
-        LL_DELETE(boardlist_stack, boardlist_stack);
+        elt = boardlist_stack;
+        LL_DELETE(boardlist_stack, elt);
+        free(elt);
         memset((void*) pbl, '\0', sizeof(BOARDLIST));
     } else {
         pbl = calloc(1, sizeof(BOARDLIST));
@@ -192,8 +185,6 @@ void freeBoard(BOARD* pbrd)
     pbrd->use_count--;
 
     if (pbrd->use_count == 0) {
-        boards_freed++;
-
         if (pbrd->pos != NULL) {
             freePosition(pbrd->pos);
         }
@@ -226,7 +217,6 @@ void freePosition(POSITION* ppos)
     int len;
     POSITION_REC* elt;
     assert(ppos != NULL);
-    positions_freed++;
     LL_COUNT(position_stack, elt, len);
 
     if (len < MAX_POS_POOL) {
@@ -249,7 +239,6 @@ void freeBoardlist(BOARDLIST* pbl)
     pbl->use_count--;
 
     if (pbl->use_count == 0) {
-        boardlists_freed++;
         BOARD* b;
         BOARD* tmp;
         LL_FOREACH_SAFE(pbl->vektor, b, tmp) {
