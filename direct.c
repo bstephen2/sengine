@@ -708,6 +708,7 @@ static BOARDLIST* norm_blackMidMove(BOARD* inBrd, int move)
 
         if (mateIn == NOSTIP) {
             refutationFound = true;
+            freeBoardlist(wml);
 
             if (ishash == true) {
                 HASHVALUE* hv = getHashValue();
@@ -1243,6 +1244,10 @@ static void walkWBoardList(BOARDLIST* wbl)
                         wb->threat = tbl;
                         weedNonDefences(tbl, bbl, opt_fleck);
                     }
+                    else
+                    {
+                        freeBoardlist(tbl);
+                    }
                 }
             } else {
                 if ((check == false) && (bbl->legalMoves > 1)) {
@@ -1255,6 +1260,10 @@ static void walkWBoardList(BOARDLIST* wbl)
                     if (ct > 0) {
                         wb->threat = tbl;
                         weedNonDefences(tbl, bbl, opt_fleck);
+                    }
+                    else
+                    {
+                        freeBoardlist(tbl);
                     }
                 } else {
                     walkBBoardList(bbl);

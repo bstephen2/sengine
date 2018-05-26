@@ -1,6 +1,5 @@
 #!/bin/bash
 set -x
-valgrind --leak-check=full \
 sengine \
     --kings=d6d4 \
     --pos=d1d5d7a2b3d3f3g2a3c3e3g3 \

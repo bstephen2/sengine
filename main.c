@@ -79,9 +79,18 @@ int main(int argc, char* argv[])
                     freeBoardlist(dir_sol->keys);
                 }
 
-                //if (dir_sol->trieskeys != NULL) {
-                    //freeBoardlist(dir_sol->trieskeys);
-                //}
+                if (dir_sol->trieskeys != NULL) {
+                    BOARD* s;
+                    BOARD* tmp;
+                    
+                    LL_FOREACH_SAFE(dir_sol->trieskeys->vektor, s, tmp)
+                    {
+                        LL_DELETE(dir_sol->trieskeys->vektor, s);
+                        free(s);
+                    }
+                    
+                    free(dir_sol->trieskeys);
+                }
 
                 add_dir_options();
                 add_dir_stats(dir_sol);
