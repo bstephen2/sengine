@@ -79,7 +79,10 @@ int main(int argc, char* argv[])
                     freeBoardlist(dir_sol->keys);
                 }
 
-                freeBoardlist(dir_sol->trieskeys);
+                //if (dir_sol->trieskeys != NULL) {
+                    //freeBoardlist(dir_sol->trieskeys);
+                //}
+
                 add_dir_options();
                 add_dir_stats(dir_sol);
                 end_clock();

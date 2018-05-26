@@ -55,14 +55,17 @@ void close_mem(void)
     BOARDLIST_REC* blr_tmp;
     LL_FOREACH_SAFE(board_stack, br_elt, br_tmp) {
         LL_DELETE(board_stack, br_elt);
+        free(br_elt->block);
         free(br_elt);
     }
     LL_FOREACH_SAFE(position_stack, pr_elt, pr_tmp) {
         LL_DELETE(position_stack, pr_elt);
+        free(pr_elt->block);
         free(pr_elt);
     }
     LL_FOREACH_SAFE(boardlist_stack, blr_elt, blr_tmp) {
         LL_DELETE(boardlist_stack, blr_elt);
+        free(blr_elt->block);
         free(blr_elt);
     }
     return;
