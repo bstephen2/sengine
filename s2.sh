@@ -6,8 +6,7 @@ sengine \
     --gbr=4785.32 \
     --moves=2 \
     --stip=# \
-    --actual \
-    --fleck | kfilter
+    --actual
 echo $?
 exit 0
 

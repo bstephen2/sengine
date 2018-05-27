@@ -638,7 +638,7 @@ static BOARDLIST* gloss_blackMove(BOARD* inBrd, int moves)
 static BOARDLIST* norm_blackMidMove(BOARD* inBrd, int move)
 {
     BOARDLIST* bml;
-    BOARDLIST* wml;
+    BOARDLIST* wml = NULL;
     BOARD* m;
     BOARD* b1;
     BOARD* tmp;
@@ -676,7 +676,6 @@ static BOARDLIST* norm_blackMidMove(BOARD* inBrd, int move)
             mateIn = wml->stipIn;
         } else {
             if ((opt_moves > 4) && ((move == 2) || (move == 3))) {
-                //if ( ( opt_moves > 4 ) && ( move == 2 ) ) {
                 HASHVALUE* ptr;
                 ishash = true;
                 getHashKey(m, &kp);
@@ -709,6 +708,7 @@ static BOARDLIST* norm_blackMidMove(BOARD* inBrd, int move)
         if (mateIn == NOSTIP) {
             refutationFound = true;
             freeBoardlist(wml);
+            wml = NULL;
 
             if (ishash == true) {
                 HASHVALUE* hv = getHashValue();
@@ -1243,9 +1243,7 @@ static void walkWBoardList(BOARDLIST* wbl)
                     if (ct > 0) {
                         wb->threat = tbl;
                         weedNonDefences(tbl, bbl, opt_fleck);
-                    }
-                    else
-                    {
+                    } else {
                         freeBoardlist(tbl);
                     }
                 }
@@ -1260,9 +1258,7 @@ static void walkWBoardList(BOARDLIST* wbl)
                     if (ct > 0) {
                         wb->threat = tbl;
                         weedNonDefences(tbl, bbl, opt_fleck);
-                    }
-                    else
-                    {
+                    } else {
                         freeBoardlist(tbl);
                     }
                 } else {

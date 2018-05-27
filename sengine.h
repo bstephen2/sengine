@@ -29,7 +29,13 @@
 #include "utlist.h"
 #include "md5.h"
 
-#define COMPILER "gcc"
+#ifdef __GNUC__
+#define COMP "gcc"
+#define CV  __VERSION__
+#else
+#define COMP "Unknown"
+#define CV "?.?"
+#endif
 #define PROGRAM_NAME "Kalulu"
 #define PROGRAM_VERSION "1.4"
 #define PROGRAM_YEAR "2017-2018"
@@ -38,9 +44,6 @@
 #define MD5_LEN 16
 #define KILLERKEY_LEN 3
 #define NOSTIP 100
-#define MAX_POS_POOL 0
-#define MAX_BOARD_POOL 0
-#define MAX_BOARDLIST_POOL 0
 #define B_KING_CASTLING 2
 #define B_QUEEN_CASTLING 4
 #define W_KING_CASTLING 8

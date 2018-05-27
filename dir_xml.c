@@ -92,7 +92,7 @@ void start_dir(void)
         (void) genxAddText(w, (unsigned char*) PROGRAM_AUTHOR);
         (void) genxEndElement(w);
         (void) genxStartElementLiteral(w, NULL, compel);
-        (void) sprintf(progText, "%s", COMPILER);
+        (void) sprintf(progText, "%s (v %s)", COMP, CV);
         (void) genxAddText(w, (unsigned char*) progText);
         (void) genxEndElement(w);
     }

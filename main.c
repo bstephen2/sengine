@@ -18,16 +18,14 @@
 
 #include "sengine.h"
 extern enum STIP opt_stip;
-extern uint64_t positions_got;
-extern uint64_t boards_got;
-extern uint64_t boardlists_got;
-extern uint64_t positions_freed;
-extern uint64_t boards_freed;
-extern uint64_t boardlists_freed;
-
 static clock_t prog_start, prog_end;
 static double run_time;
 enum SOUNDNESS sound;
+
+static void do_direct(BOARD*);
+static void do_self(BOARD*);
+static void do_help(BOARD*);
+static void do_reflex(BOARD*);
 
 void end_clock(void)
 {
@@ -58,66 +56,20 @@ int main(int argc, char* argv[])
         if (rc == 0) {
             switch (opt_stip) {
             case DIRECT: {
-                DIR_SOL* dir_sol;
-                dir_sol = (DIR_SOL*) calloc(1, sizeof(DIR_SOL));
-                SENGINE_MEM_ASSERT(dir_sol);
-                solve_direct(dir_sol, init_pos);
-                start_dir();
-
-                if (dir_sol->set != NULL) {
-                    add_dir_set(dir_sol->set);
-                    freeBoardlist(dir_sol->set);
-                }
-
-                if (dir_sol->tries != NULL) {
-                    add_dir_tries(dir_sol->tries);
-                    freeBoardlist(dir_sol->tries);
-                }
-
-                if (dir_sol->keys != NULL) {
-                    add_dir_keys(dir_sol->keys);
-                    freeBoardlist(dir_sol->keys);
-                }
-
-                if (dir_sol->trieskeys != NULL) {
-                    BOARD* s;
-                    BOARD* tmp;
-                    
-                    LL_FOREACH_SAFE(dir_sol->trieskeys->vektor, s, tmp)
-                    {
-                        LL_DELETE(dir_sol->trieskeys->vektor, s);
-                        free(s);
-                    }
-                    
-                    free(dir_sol->trieskeys);
-                }
-
-                add_dir_options();
-                add_dir_stats(dir_sol);
-                end_clock();
-                time_dir(run_time);
-                end_dir();
-                free(dir_sol);
-                freeBoard(init_pos);
+                do_direct(init_pos);
                 break;
             }
 
             case SELF:
-                (void) fputs("sengine ERROR: Can't solve selfmates yet!",
-                             stderr);
-                exit(1);
+                do_self(init_pos);
                 break;
 
             case REFLEX:
-                (void) fputs("sengine ERROR: Can't solve reflexmates yet!",
-                             stderr);
-                exit(1);
+                do_reflex(init_pos);
                 break;
 
             case HELP:
-                (void) fputs("sengine ERROR: Can't solve helpmates yet!",
-                             stderr);
-                exit(1);
+                do_help(init_pos);
                 break;
 
             default:
@@ -139,11 +91,70 @@ int main(int argc, char* argv[])
     return rc;
 }
 
-int tzcount(BITBOARD inBrd)
+void do_direct(BOARD* init_pos)
 {
-    if (inBrd == 0) {
-        return 64;
+    DIR_SOL* dir_sol;
+    dir_sol = (DIR_SOL*) calloc(1, sizeof(DIR_SOL));
+    SENGINE_MEM_ASSERT(dir_sol);
+    solve_direct(dir_sol, init_pos);
+    start_dir();
+
+    if (dir_sol->set != NULL) {
+        add_dir_set(dir_sol->set);
+        freeBoardlist(dir_sol->set);
     }
 
-    return __builtin_ctzll(inBrd);
+    if (dir_sol->tries != NULL) {
+        add_dir_tries(dir_sol->tries);
+        freeBoardlist(dir_sol->tries);
+    }
+
+    if (dir_sol->keys != NULL) {
+        add_dir_keys(dir_sol->keys);
+        freeBoardlist(dir_sol->keys);
+    }
+
+    if (dir_sol->trieskeys != NULL) {
+        BOARD* s;
+        BOARD* tmp;
+        LL_FOREACH_SAFE(dir_sol->trieskeys->vektor, s, tmp) {
+            LL_DELETE(dir_sol->trieskeys->vektor, s);
+            free(s);
+        }
+        free(dir_sol->trieskeys);
+    }
+
+    add_dir_options();
+    add_dir_stats(dir_sol);
+    end_clock();
+    time_dir(run_time);
+    end_dir();
+    free(dir_sol);
+    freeBoard(init_pos);
+    return;
 }
+
+static void do_self(BOARD* init_pos)
+{
+    (void) fputs("sengine ERROR: Can't solve selfmates yet!",
+                 stderr);
+    exit(1);
+    return;
+}
+
+static void do_help(BOARD* init_pos)
+{
+    (void) fputs("sengine ERROR: Can't solve helpmates yet!",
+                 stderr);
+    exit(1);
+    return;
+}
+
+static void do_reflex(BOARD* init_pos)
+{
+    (void) fputs("sengine ERROR: Can't solve reflexmates yet!",
+                 stderr);
+    exit(1);
+    return;
+}
+

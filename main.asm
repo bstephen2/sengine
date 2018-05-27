@@ -1,5 +1,5 @@
 ; Disassembly of file: main.o
-; Sat May 26 16:07:49 2018
+; Sun May 27 14:49:15 2018
 ; Mode: 64 bits
 ; Syntax: YASM/NASM
 ; Instruction set: SSE2, x64
@@ -8,7 +8,6 @@ default rel
 
 global sound
 global end_clock: function
-global tzcount: function
 global main: function
 
 extern freeBoard                                        ; near
@@ -43,22 +42,6 @@ SECTION .text   align=16 execute                        ; section number 1, code
 end_clock:; Function begin
         jmp     clock                                   ; 0000 _ E9, 00000000(rel)
 ; end_clock End of function
-
-        nop                                             ; 0005 _ 90
-; Filling space: 0AH
-; Filler type: Multi-byte NOP
-;       db 66H, 2EH, 0FH, 1FH, 84H, 00H, 00H, 00H
-;       db 00H, 00H
-
-ALIGN   16
-
-tzcount:; Function begin
-        bsf     rdx, rdi                                ; 0010 _ 48: 0F BC. D7
-        mov     eax, 64                                 ; 0014 _ B8, 00000040
-        test    rdi, rdi                                ; 0019 _ 48: 85. FF
-        cmovne  rax, rdx                                ; 001C _ 48: 0F 45. C2
-        ret                                             ; 0020 _ C3
-; tzcount End of function
 
 
 SECTION .data   align=1 noexecute                       ; section number 2, data
@@ -216,7 +199,7 @@ main:   ; Function begin
         je      ?_026                                   ; 0139 _ 0F 84, 000000FB
         mov     rdx, qword [rax]                        ; 013F _ 48: 8B. 10
         mov     r13, qword [rdi+38H]                    ; 0142 _ 4C: 8B. 6F, 38
-        cmp     rdi, rdx                                ; 0146 _ 48: 39. D7
+        cmp     rdx, rdi                                ; 0146 _ 48: 39. FA
         jnz     ?_017                                   ; 0149 _ 75, 0D
         jmp     ?_022                                   ; 014B _ EB, 79
 
@@ -225,7 +208,7 @@ main:   ; Function begin
 ;       db 0FH, 1FH, 00H
 
 ALIGN   8
-?_016:  cmp     rdi, rax                                ; 0150 _ 48: 39. C7
+?_016:  cmp     rax, rdi                                ; 0150 _ 48: 39. F8
         jz      ?_019                                   ; 0153 _ 74, 1A
         mov     rdx, rax                                ; 0155 _ 48: 89. C2
 ?_017:  mov     rax, qword [rdx+38H]                    ; 0158 _ 48: 8B. 42, 38
@@ -302,7 +285,7 @@ ALIGN   8
 
 ?_028:  ; Local function
         mov     rdi, qword [rel stderr]                 ; 0290 _ 48: 8B. 3D, 00000000(rel)
-        mov     r8d, 63                                 ; 0297 _ 41: B8, 0000003F
+        mov     r8d, 98                                 ; 0297 _ 41: B8, 00000062
         mov     ecx, ?_001                              ; 029D _ B9, 00000000(d)
         xor     eax, eax                                ; 02A2 _ 31. C0
         mov     edx, ?_002                              ; 02A4 _ BA, 00000000(d)
@@ -335,9 +318,5 @@ SECTION .eh_frame align=8 noexecute                     ; section number 9, cons
         dd 300E4605H, 280E0A60H                         ; 0050 _ 806241797 672008800 
         dd 41200E43H, 0E42180EH                         ; 0058 _ 1092619843 239212558 
         dd 080E4210H, 00000B41H                         ; 0060 _ 135152144 2881 
-        dd 00000014H, 0000006CH                         ; 0068 _ 20 108 
-        dd end_clock-$-60H                              ; 0070 _ 00000000 (rel)
-        dd 00000011H, 00000000H                         ; 0074 _ 17 0 
-        dd 00000000H                                    ; 007C _ 0 
 
 
