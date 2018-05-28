@@ -6,6 +6,6 @@ sengine \
     --gbr=0000.10 \
     --moves=2 \
     --stip=# \
-    --actual | kfilter
+    --actual
 echo $?
 exit 0

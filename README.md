@@ -1,13 +1,15 @@
-# sengine
-A Linux C program to test and classify orthodox chess problems. It will eventually deal with directmates, selfmates, relfexmates, helpmates and their stalemate equivalents.
+# antcheck
 
-Input is taken from the program options and output is xml on stdout.
+This is currently in development.
 
-It will run on the command line, but is designed to be called from a graphical front end, yet to be written. A Windows version will eventually be produced.
+A C program for identifying potentially anticipated #2 chess problems in my Meson Chess
+Problem Database (http://www.bstephen.me.uk/meson/meson.pl). Not useful for anybody but
+me. It is a rewrite of a Perl script that, with the increase in size of the
+database, is taking too long to run.
 
-It uses:
-  genx (an xml library by Tim Bray)
-  an md5 library by Peter Deutsch
-  uthash.h, utarray.h, utlist.h and utstring.h by Tory Hanson.
-  
-It is still in development, so don't expect it to work just yet.
+It runs on Linux and uses the standard pthread, ncurses and mysqlclient C libraries.
+
+It also uses the following external open source libraries:
+
+Mini-XML by Michael Sweet (michaelrsweet/mxml here on Github).
+UThash, UTarray and UTstring by Troy Hanson (troydhanson/uthash here on Github).

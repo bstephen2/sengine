@@ -17,6 +17,9 @@
  *	This is the module that includes all routines to do with boards.
  */
 #include "sengine.h"
+#ifdef __POCC__
+#include <intrin.h>
+#endif
 extern char* opt_castling;
 extern char* opt_ep;
 extern char* opt_kings;
@@ -47,7 +50,16 @@ int tzcount(BITBOARD inBrd)
         return 64;
     }
 
+#ifdef __GNUC__
     return __builtin_ctzll(inBrd);
+#elif defined __POCC__
+    uint32_t index;
+    unsigned char retc;
+    retc = _BitScanForward64(&index, inBrd);
+    return (int) index;
+#else
+#error "No tzcount routine defined!!"
+#endif
 }
 
 void getKillerHashKey(BOARD* bd, KILLERKEY* kk)

@@ -32,6 +32,10 @@
 #ifdef __GNUC__
 #define COMP "gcc"
 #define CV  __VERSION__
+#elif defined __POCC__
+#define COMP "Pelles"
+#define CV "8.00.60"
+#define PLATFORM "Win64"
 #else
 #define COMP "Unknown"
 #define CV "?.?"
@@ -44,7 +48,14 @@
 #define PLATFORM "Linux 32-bit"
 #endif
 #else
-#define PLATFORM "??"
+#ifdef __WIN32__
+#define PLATFORM "Win32"
+#else
+#ifdef __WIN64__
+#define PLATFORM "Win64"
+#endif
+
+#endif
 #endif
 
 #define PROGRAM_NAME "Kalulu"
