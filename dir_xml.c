@@ -71,6 +71,7 @@ static const unsigned char addedel[] = "hash_added";
 static const unsigned char hitnullel[] = "hash_hit_null";
 static const unsigned char hitlistel[] = "hash_hit_list";
 static const unsigned char compel[] = "compiler";
+static const unsigned char platform[] = "platform";
 
 void getWmoveXML(BOARDLIST*);
 void getBmoveXML(BOARDLIST*);
@@ -94,6 +95,9 @@ void start_dir(void)
         (void) genxStartElementLiteral(w, NULL, compel);
         (void) sprintf(progText, "%s (v %s)", COMP, CV);
         (void) genxAddText(w, (unsigned char*) progText);
+        (void) genxEndElement(w);
+        (void) genxStartElementLiteral(w, NULL, platform);
+        (void) genxAddText(w, (unsigned char*) PLATFORM);
         (void) genxEndElement(w);
     }
 

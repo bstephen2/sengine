@@ -183,57 +183,11 @@ static bool isCapture(BOARD* bd)
     return bd->captured;
 }
 
-/*
-static bool isKiller( BOARD * bd ) {
-   return bd->killer;
-}
-*/
 static bool isProm(BOARD* bd)
 {
     return (bd->promotion == NOPIECE) ? false : true;
 }
 
-/*
-static int partition( BOARDLIST * bbl, int start, bool( *pred ) ( BOARD * ) ) {
-
-      int lastind = kv_size( bbl->vektor ) - 1;
-      int i = start;
-      int rc = start;
-      int j, k;
-      BOARD *t;
-
-      while ( i < lastind ) {
-      t = kv_A( bbl->vektor, i );
-
-      if ( ( pred ) ( t ) == true ) {
-      i++;
-      } else {
-      break;
-      }
-      }
-
-      if ( i == lastind ) {
-      return i;
-      }
-
-      for ( j = i; j < lastind; j++ ) {
-      t = kv_A( bbl->vektor, j );
-      if ( ( pred ) ( t ) == false ) {
-      for ( k = j + 1; k <= lastind; k++ ) {
-      t = kv_A( bbl->vektor, k );
-
-      if ( ( pred ) ( t ) == true ) {
-      kv_A( bbl->vektor, k ) = kv_A( bbl->vektor, j );
-      kv_A( bbl->vektor, j ) = t;
-      rc = j + 1;
-      break;
-      }
-      }
-      }
-      }
-   return 0;
-}
-*/
 BOARDLIST* generateRefutations(BOARD*, int);
 void qualifyMove(BOARDLIST*, BOARD*);
 
@@ -1163,7 +1117,7 @@ static void weedNonDefences(BOARDLIST* threats, BOARDLIST* bbl, bool fleck)
                     }
                     LL_COUNT(threats->vektor, tmp1, ct);
 
-                    if (ct != c) {
+                    if (ct == c) {
                         LL_DELETE(bbl->vektor, bm);
                         freeBoard(bm);
                     }

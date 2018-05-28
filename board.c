@@ -32,7 +32,7 @@ extern BITBOARD pawn_attacks[2][64];
 extern BITBOARD pawn_moves[2][64];
 extern BBOARD rook_commonAttacks[64][64];
 extern BBOARD bishop_commonAttacks[64][64];
- 
+
 static const enum PIECE proms[] = { QUEEN, KNIGHT, BISHOP, ROOK };
 
 static const char pcArray[] = "**SBRQK";

@@ -36,6 +36,17 @@
 #define COMP "Unknown"
 #define CV "?.?"
 #endif
+
+#ifdef __linux__
+#ifdef __LP64__
+#define PLATFORM "Linux 64-bit"
+#else
+#define PLATFORM "Linux 32-bit"
+#endif
+#else
+#define PLATFORM "??"
+#endif
+
 #define PROGRAM_NAME "Kalulu"
 #define PROGRAM_VERSION "1.4"
 #define PROGRAM_YEAR "2017-2018"

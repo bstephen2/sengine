@@ -136,7 +136,7 @@ void do_direct(BOARD* init_pos)
 
 static void do_self(BOARD* init_pos)
 {
-    (void) fputs("sengine ERROR: Can't solve selfmates yet!",
+    (void) fputs("sengine ERROR: Can't solve selfmates yet!\n",
                  stderr);
     exit(1);
     return;
@@ -144,7 +144,7 @@ static void do_self(BOARD* init_pos)
 
 static void do_help(BOARD* init_pos)
 {
-    (void) fputs("sengine ERROR: Can't solve helpmates yet!",
+    (void) fputs("sengine ERROR: Can't solve helpmates yet!\n",
                  stderr);
     exit(1);
     return;
@@ -152,7 +152,7 @@ static void do_help(BOARD* init_pos)
 
 static void do_reflex(BOARD* init_pos)
 {
-    (void) fputs("sengine ERROR: Can't solve reflexmates yet!",
+    (void) fputs("sengine ERROR: Can't solve reflexmates yet!\n",
                  stderr);
     exit(1);
     return;
