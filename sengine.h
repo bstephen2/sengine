@@ -32,10 +32,6 @@
 #ifdef __GNUC__
 #define COMP "gcc"
 #define CV  __VERSION__
-#elif defined __POCC__
-#define COMP "Pelles"
-#define CV "8.00.60"
-#define PLATFORM "Win64"
 #else
 #define COMP "Unknown"
 #define CV "?.?"
@@ -54,7 +50,6 @@
 #ifdef __WIN64__
 #define PLATFORM "Win64"
 #endif
-
 #endif
 #endif
 

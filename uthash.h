@@ -66,7 +66,7 @@ do {                                                                            
 #if defined(_WIN32)
 #if defined(_MSC_VER) && _MSC_VER >= 1600
 #include <stdint.h>
-#elif defined(__WATCOMC__) || defined(__MINGW32__) || defined(__CYGWIN__) || defined(__POCC__)
+#elif defined(__WATCOMC__) || defined(__MINGW32__) || defined(__CYGWIN__)
 #include <stdint.h>
 #else
 typedef unsigned int uint32_t;

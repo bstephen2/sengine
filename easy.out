@@ -1,0 +1,51 @@
+
+c:\dev\sengine>sengine32 --kings=e1h2 --gbr=0153.22 --pos=a1b2f3a2a5d2f2d3g5 --actual --moves=5 --castling=Q   | kfilter32
+Kalulu (v.1.4)
+
+(8/8/8/s5p1/8/3p1B2/bB1P1P1k/R3K3 w Q - 0 1)
++---+---+---+---+---+---+---+---+
+|   |   |   |   |   |   |   |   |
++---+---+---+---+---+---+---+---+
+|   |   |   |   |   |   |   |   |
++---+---+---+---+---+---+---+---+
+|   |   |   |   |   |   |   |   |
++---+---+---+---+---+---+---+---+
+| s |   |   |   |   |   | p |   |
++---+---+---+---+---+---+---+---+
+|   |   |   |   |   |   |   |   |
++---+---+---+---+---+---+---+---+
+|   |   |   | p |   | B |   |   |
++---+---+---+---+---+---+---+---+
+| b | B |   | P |   | P |   | k |
++---+---+---+---+---+---+---+---+
+| R |   |   |   | K |   |   |   |
++---+---+---+---+---+---+---+---+
+#5                        (6 + 5)
+
+Solution
+--------
+
+Set play
+
+
+Try play
+
+
+Actual play
+
+1.Be5+!  
+
+         1..Kg1   2.Bh2+   2..Kxh2  3.0-0-0  thr      4.Rh1#   
+                                             3..Sb3+  4.Kb2    thr      5.Rh1#   
+                                                               4..Kh3   5.Rh1#   
+
+Solving time: 5.481000 seconds
+
+Solving Parameters
+------------------
+
+Intended solutions: 1, Set play: off, Try play: off
+Refutations: 0, Trivialtries: off, Actual play: on
+Threats: SHORTEST, Fleck: off, Shortvars: off
+
+Solved by Kalulu version 1.4 

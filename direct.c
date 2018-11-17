@@ -31,6 +31,11 @@ extern unsigned int opt_refuts;
 extern bool opt_shortvars;
 extern bool opt_fleck;
 
+#ifdef MOVESTAT
+static char toPiece(enum PIECE);
+char* toSquare(int);
+#endif
+
 static void sortStrongBlackMoves(BOARDLIST*);
 static void sortWhiteMoves(BOARDLIST*);
 static BOARDLIST* norm_final_move(BOARD*, int);
@@ -65,6 +70,14 @@ static unsigned int hash_hit_null = 0;
 static unsigned int hash_hit_list = 0;
 static HASHVALUE* transtable = NULL;
 static KILLERHASHVALUE* killers = NULL;
+
+#ifdef MOVESTAT
+static char toPiece(enum PIECE inpc)
+{
+    char tr[] = "XPSBRQK";
+    return tr[inpc];
+}
+#endif
 
 static int whiteMoveCompare(void* a, void* b)
 {
@@ -772,13 +785,20 @@ static BOARDLIST* blackMove(BOARD* inBrd)
     }
 
     LL_FOREACH(bml->vektor, b) {
-        qualifyMove(bml, b);
 #ifdef MOVESTAT
-        char* ts = toStr(b);
-        (void) fprintf(stderr, "\t%s\n", ts);
-        (void) fflush(stderr);
-        free(ts);
+        {
+            char* stf = toSquare(b->from);
+            char* stt = toSquare(b->to);
+            (void) fprintf(stderr,
+                           "   1...%c%s-%s (added = %u, hit null = %u, hit_list = %u)\n",
+                           toPiece(b->mover), stf, stt, hash_added,
+                           hash_hit_null, hash_hit_list);
+            (void) fflush(stderr);
+            free(stf);
+            free(stt);
+        }
 #endif
+        qualifyMove(bml, b);
 
         if (opt_moves == 2) {
             wml = norm_final_move(b, 2);
@@ -1004,12 +1024,19 @@ static BOARDLIST* norm_first_move(BOARD* brd)
     int ct;
     wml = generateWhiteBoardlist(brd, 1);
     LL_FOREACH_SAFE(wml->vektor, b, tmp) {
-        qualifyMove(wml, b);
 #ifdef MOVESTAT
-        char* ts = toStr(b);
-        (void) fprintf(stderr, "%s\n", ts);
-        (void) fflush(stderr);
-        free(ts);
+        {
+            char* from = toSquare(b->from);
+            char* to = toSquare(b->to);
+
+            (void) fprintf(stderr,
+                           "1.%c%s-%s (added = %u, hit_null = %u, hit_list = %u)\n",
+                           toPiece(b->mover), from, to, hash_added, hash_hit_null,
+                           hash_hit_list);
+            (void) fflush(stderr);
+            free(from);
+            free(to);
+        }
 #endif
         bml = blackMove(b);
         assert(bml != NULL);
@@ -1073,13 +1100,11 @@ static BOARDLIST* norm_first_move(BOARD* brd)
         wml->maxStip = maxStip;
         wml->stipIn = minStip;
         BOARD* nb;
-        //BOARDLIST* uml = generateWhiteBoardlist(brd, 1);
+        BOARDLIST* uml = generateWhiteBoardlist(brd, 1);
         LL_FOREACH(wml->vektor, nb) {
-            //qualifyMove(uml, nb);
-            freePosition(nb->pos);
-            //nb->pos = NULL;
+            qualifyMove(uml, nb);
         }
-        //freeBoardlist(uml);
+        freeBoardlist(uml);
     } else {
         wml->minStip = NOSTIP;
         wml->maxStip = NOSTIP;
